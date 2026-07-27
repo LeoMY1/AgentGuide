@@ -127,18 +127,18 @@ Spec 至少回答：
 
 每次跑完记录：
 
-| 字段 | 说明 |
-|:---|:---|
-| task_id | 任务编号 |
-| input | 用户输入 |
-| expected | 期望行为 |
-| actual | 实际输出 |
-| pass | 是否通过 |
+| 字段           | 说明                        |
+| :----------- | :------------------------ |
+| task_id      | 任务编号                      |
+| input        | 用户输入                      |
+| expected     | 期望行为                      |
+| actual       | 实际输出                      |
+| pass         | 是否通过                      |
 | failure_type | 工具选错、上下文污染、模型能力、业务规则、权限问题 |
-| steps | agent loop 步数 |
-| tool_calls | 工具调用次数 |
-| cost | token 或金额 |
-| latency | 延迟 |
+| steps        | agent loop 步数             |
+| tool_calls   | 工具调用次数                    |
+| cost         | token 或金额                 |
+| latency      | 延迟                        |
 
 消融实验可以这样做：
 
