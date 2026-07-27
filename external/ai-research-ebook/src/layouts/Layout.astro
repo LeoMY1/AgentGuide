@@ -12,11 +12,25 @@ interface Props {
 }
 
 const {
-  title = 'Vibe Research - AI 科研指南',
-  description = 'AI研究电子书 - 从 idea 到论文投稿的完整实践工作流',
+  title = 'Vibe Research | AI 科研工作流与论文写作指南',
+  description = '从 Idea 生成、代码实现、论文图表、写作到审稿与 Rebuttal 的完整 AI 科研工作流。',
 } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const socialImage = 'https://adongwanai.github.io/AgentGuide/assets/agentguide-social.png';
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  name: title,
+  description,
+  url: canonicalURL.toString(),
+  inLanguage: 'zh-CN',
+  isPartOf: {
+    '@type': 'WebSite',
+    name: 'Vibe Research',
+    url: 'https://adongwanai.github.io/AgentGuide/research/',
+  },
+};
 
 const getPath = (path: string) => {
   const base = import.meta.env.BASE_URL;
@@ -29,10 +43,25 @@ const getPath = (path: string) => {
   <head>
     <meta charset="UTF-8" />
     <meta name="description" content={description} />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
     <link rel="icon" type="image/svg+xml" href={getPath('/favicon.svg')} />
     <link rel="canonical" href={canonicalURL} />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="zh_CN" />
+    <meta property="og:site_name" content="Vibe Research" />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={socialImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={socialImage} />
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(structuredData)} />
     <script is:inline>
       (() => {
         const key = 'vr-theme';
@@ -74,7 +103,7 @@ const getPath = (path: string) => {
             <li><a href={getPath('/#about')} class="text-slate-500 hover:text-slate-900 transition-colors text-sm font-medium">关于</a></li>
             <li><a href={getPath('/docs/intro/01-overview')} class="text-slate-500 hover:text-slate-900 transition-colors text-sm font-medium">文档</a></li>
             <li><a href={getPath('/skills')} class="text-slate-500 hover:text-slate-900 transition-colors text-sm font-medium">Skills</a></li>
-            <li><a href="https://github.com/yiweinanzi/ai-research-ebook" target="_blank" rel="noopener" class="text-slate-500 hover:text-slate-900 transition-colors text-sm font-medium">GitHub</a></li>
+            <li><a href="https://github.com/adongwanai/AgentGuide" target="_blank" rel="noopener" class="text-slate-500 hover:text-slate-900 transition-colors text-sm font-medium">GitHub</a></li>
           </ul>
         </div>
       </nav>
@@ -88,7 +117,7 @@ const getPath = (path: string) => {
       <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-4">
         <p class="text-slate-500 text-sm">&copy; {new Date().getFullYear()} Vibe Research. Built with Astro + Tailwind.</p>
         <div class="flex gap-6">
-          <a href="https://github.com/yiweinanzi/ai-research-ebook" target="_blank" rel="noopener" class="text-slate-500 hover:text-accent transition-colors text-sm">GitHub</a>
+          <a href="https://github.com/adongwanai/AgentGuide" target="_blank" rel="noopener" class="text-slate-500 hover:text-accent transition-colors text-sm">GitHub</a>
           <a href={getPath('/docs/intro/01-overview')} class="text-slate-500 hover:text-accent transition-colors text-sm">开始阅读</a>
         </div>
       </div>

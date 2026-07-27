@@ -31,9 +31,11 @@ const { question } = Astro.props as {
 };
 
 const decodedId = fromQuestionSlug(Astro.params.id ?? question.id);
+const companySummary = question.companies.slice(0, 4).join('、');
+const questionDescription = `${question.title}。所属${question.categoryName}，常见于${companySummary || 'AI 算法'}面试，包含 ${question.variants.length} 个追问变体。`;
 ---
 
-<Layout title={`${question.title} | InterviewGuide`} description={`${question.title} - 题目详情`}>
+<Layout title={`${question.title} | InterviewGuide`} description={questionDescription}>
   <section class="py-12 px-6">
     <div class="max-w-5xl mx-auto">
       <div class="flex items-center justify-between gap-4 flex-wrap">

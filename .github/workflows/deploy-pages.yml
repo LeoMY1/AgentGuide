@@ -60,21 +60,19 @@ jobs:
           GITHUB_REPOSITORY: adongwanai/AgentGuide
         run: npm run build
 
-      - name: Copy to research directory
+      - name: Prepare static deployment artifact
         run: |
-          rm -rf research
-          mkdir -p research
-          cp -r external/ai-research-ebook/dist/* research/
-
-      - name: Copy to interview directory
-        run: |
-          rm -rf interview
-          mkdir -p interview
-          cp -r external/InterviewGuide/dist/* interview/
+          rm -rf site-dist
+          mkdir -p site-dist/assets site-dist/data site-dist/research site-dist/interview
+          cp index.html 404.html robots.txt sitemap.xml site.webmanifest .nojekyll site-dist/
+          cp -r assets/. site-dist/assets/
+          cp data/resources.json site-dist/data/resources.json
+          cp -r external/ai-research-ebook/dist/. site-dist/research/
+          cp -r external/InterviewGuide/dist/. site-dist/interview/
 
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: .
+          path: site-dist
 
   deploy:
     environment:

@@ -1,0 +1,19 @@
+{
+  "name": "AgentGuide - AI Agent 学习与求职指南",
+  "short_name": "AgentGuide",
+  "description": "AI Agent 学习路线、项目实战与面试指南",
+  "lang": "zh-CN",
+  "start_url": "/AgentGuide/",
+  "scope": "/AgentGuide/",
+  "display": "standalone",
+  "background_color": "#f4f7f5",
+  "theme_color": "#147a52",
+  "icons": [
+    {
+      "src": "assets/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

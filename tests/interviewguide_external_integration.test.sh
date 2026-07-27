@@ -3,7 +3,6 @@ set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 WORKFLOW_FILE="$ROOT_DIR/.github/workflows/deploy-pages.yml"
-STATIC_WORKFLOW_FILE="$ROOT_DIR/.github/workflows/static.yml"
 INDEX_FILE="$ROOT_DIR/index.html"
 GITIGNORE_FILE="$ROOT_DIR/.gitignore"
 EXTERNAL_DIR="$ROOT_DIR/external/InterviewGuide"
@@ -11,7 +10,9 @@ EXTERNAL_DIR="$ROOT_DIR/external/InterviewGuide"
 grep -q "external/InterviewGuide/package-lock.json" "$WORKFLOW_FILE"
 grep -q "working-directory: external/InterviewGuide" "$WORKFLOW_FILE"
 grep -q "BASE_PATH: /AgentGuide/interview" "$WORKFLOW_FILE"
-grep -q "cp -r external/InterviewGuide/dist/\\* interview/" "$WORKFLOW_FILE"
+grep -q "cp -r external/InterviewGuide/dist/. site-dist/interview/" "$WORKFLOW_FILE"
+grep -q "cp -r external/ai-research-ebook/dist/. site-dist/research/" "$WORKFLOW_FILE"
+grep -q "path: site-dist" "$WORKFLOW_FILE"
 grep -q "paths-ignore:" "$WORKFLOW_FILE"
 grep -q "'research/\\*\\*'" "$WORKFLOW_FILE"
 grep -q "'interview/\\*\\*'" "$WORKFLOW_FILE"
@@ -22,11 +23,7 @@ if grep -Eq "git add .*research/.*interview/" "$WORKFLOW_FILE"; then
   exit 1
 fi
 
-# avoid dual-pages workflows both auto-triggering on push
-if grep -q "^  push:" "$STATIC_WORKFLOW_FILE"; then
-  echo "static.yml should not auto-trigger on push"
-  exit 1
-fi
+test ! -f "$ROOT_DIR/.github/workflows/static.yml"
 
 grep -q "external/InterviewGuide/dist/" "$GITIGNORE_FILE"
 grep -q "external/InterviewGuide/node_modules/" "$GITIGNORE_FILE"

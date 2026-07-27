@@ -21,3 +21,8 @@ external/ai-research-ebook/.astro/
 external/InterviewGuide/dist/
 external/InterviewGuide/node_modules/
 external/InterviewGuide/.astro/
+
+# 本地 Pages 预览产物
+site-dist/
+__pycache__/
+*.pyc

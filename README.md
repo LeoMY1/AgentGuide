@@ -12,7 +12,7 @@
         <img src="https://img.shields.io/github/stars/adongwanai/AgentGuide.svg?style=for-the-badge&logo=github&label=Stars" alt="GitHub stars">
     </a>
     <a href="https://github.com/adongwanai/AgentGuide/network/members">
-        <img src="https://img.shields.io/badge/Forks-527-orange.svg?style=for-the-badge&logo=github" alt="GitHub forks">
+        <img src="https://img.shields.io/github/forks/adongwanai/AgentGuide.svg?style=for-the-badge&logo=github&label=Forks" alt="GitHub forks">
     </a>
     
 <br/>
@@ -91,7 +91,7 @@
 
 <div align="center">
 <img src="https://raw.githubusercontent.com/adongwanai/Awesome-Awesome-LLMs/main/20251210154458267.png" alt="LLM开源生态图谱" width="100%">
-<sub>图片来源：<a href="https://github.com/Langchainai/llm-oss-landscape">LLM Open Source Landscape</a></sub>
+<sub>图片来源：<a href="https://github.com/adongwanai/Awesome-Awesome-LLMs">Awesome-Awesome-LLMs</a></sub>
 </div>
 
 **📌 AgentGuide 涵盖的核心技术栈（2026 版）**：
@@ -1947,7 +1947,7 @@ AgentGuide 提供 **n 个简历级实战项目**，每个项目都提供：
   - 配套书籍：[《大模型算法：强化学习、微调与对齐》](https://book.douban.com/subject/37331056/)
 
 **🌟 需要更全面的 LLM 资源？**  
-👉 查看作者的另一个项目：**[Awesome-Awesome-LLM](https://github.com/adongwanai/Awesome-Awesome-LLM)**  
+👉 查看作者的另一个项目：**[Awesome-Awesome-LLMs](https://github.com/adongwanai/Awesome-Awesome-LLMs)**
 （涵盖训练、推理、多模态、Infra 等 LLM 全栈 200+ Awesome 系列资源）
 
 ---

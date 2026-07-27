@@ -1,137 +1,402 @@
-import os
+import html
 import json
+import math
+import os
 import re
+import subprocess
 from datetime import datetime
+from pathlib import Path
+from urllib.parse import quote
 
-ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+ROOT = Path(__file__).resolve().parent.parent
 OWNER_REPO = "adongwanai/AgentGuide"
+SITE_ROOT = "https://adongwanai.github.io/AgentGuide"
 
-INCLUDE_DIRS = [
-    os.path.join(ROOT, "docs"),
-    os.path.join(ROOT, "resources"),
-    os.path.join(ROOT, "projects"),
+INCLUDE_DIRS = [ROOT / "docs", ROOT / "resources", ROOT / "projects"]
+
+FEATURED_PATHS = {
+    "docs/00-getting-started/README.md",
+    "docs/00-getting-started/02-first-7-days.md",
+    "docs/02-tech-stack/27-agent-harness-engineering.md",
+    "docs/03-practice/05-ship-agent-project.md",
+    "docs/04-interview/18-algorithm-ai-coding-question-bank.md",
+    "docs/04-interview/19-xiaohongshu-ai-algorithm-interview-bank.md",
+    "docs/05-roadmaps/agent-job-ready-roadmap-2026.md",
+    "docs/05-roadmaps/algorithm-complete-learning-guide.md",
+    "docs/05-roadmaps/embodied-ai-vla-learning-guide.md",
+}
+
+TAG_RULES = [
+    ("Agent", r"\bagent(?:ic)?\b|智能体|langgraph|langchain|autogen|crewai|agent loop|harness"),
+    ("RAG", r"\brag\b|retriev|检索|embedding|rerank|向量|graphrag"),
+    ("上下文工程", r"context engineering|上下文工程|上下文管理|context window"),
+    ("Memory", r"\bmemory\b|记忆系统|长期记忆|短期记忆"),
+    ("MCP", r"\bmcp\b|model context protocol"),
+    ("评测", r"\beval|evaluation|benchmark|评测|评估|llm-as-judge|test case"),
+    ("安全", r"security|safety|sandbox|安全|权限|红队|hitl"),
+    ("模型训练", r"sft|lora|qlora|rlhf|dpo|grpo|post-training|微调|强化学习"),
+    ("多模态", r"multimodal|多模态|\bvlm\b|\bvla\b|vision language|具身智能"),
+    ("面试", r"interview|面试|手撕|题库|简历|求职|offer"),
+    ("项目实战", r"project|项目|实战|ship|毕业设计|作品集|portfolio"),
+    ("科研", r"research|paper|论文|审稿|rebuttal|实验设计"),
+    ("部署", r"vllm|sglang|serving|部署|推理优化|量化"),
+    ("框架", r"framework|框架|agentscope|camelai"),
 ]
+
+CURATED_EXTERNAL = [
+    {
+        "id": "external-learn-workbuddy",
+        "title": "learn-workbuddy",
+        "description": "从 0 搭建 WorkBuddy-style Desktop Agent Harness，覆盖 Agent Loop、工具调用、上下文工程、长期记忆、Sidecar、权限审计与真实模型评测。",
+        "category": "开源项目",
+        "tags": ["Agent", "项目实战", "上下文工程", "Memory", "评测"],
+        "level": "进阶",
+        "type": "开源项目",
+        "url": "https://github.com/adongwanai/learn-workbuddy",
+        "sourcePath": "",
+        "date": "2026-07-27",
+        "readingMinutes": 0,
+        "wordCount": 0,
+        "status": "已完善",
+        "featured": True,
+        "external": True,
+    },
+    {
+        "id": "portal-vibe-research",
+        "title": "Vibe Research AI 科研指南",
+        "description": "从 Idea 生成、代码实现、论文图表、写作到审稿与 Rebuttal 的完整 AI 科研工作流。",
+        "category": "资源合集",
+        "tags": ["科研", "项目实战"],
+        "level": "进阶",
+        "type": "专题站",
+        "url": f"{SITE_ROOT}/research/",
+        "sourcePath": "",
+        "date": "2026-07-27",
+        "readingMinutes": 0,
+        "wordCount": 0,
+        "status": "已完善",
+        "featured": True,
+        "external": False,
+    },
+    {
+        "id": "portal-interview-guide",
+        "title": "InterviewGuide AI 面经题库",
+        "description": "按公司、知识点和频次筛选的 AI 算法与大模型面试题库，支持收藏、进度和高频优先。",
+        "category": "面试求职",
+        "tags": ["面试", "模型训练", "多模态", "Agent"],
+        "level": "进阶",
+        "type": "专题站",
+        "url": f"{SITE_ROOT}/interview/",
+        "sourcePath": "",
+        "date": "2026-07-27",
+        "readingMinutes": 0,
+        "wordCount": 0,
+        "status": "已完善",
+        "featured": True,
+        "external": False,
+    },
+]
+
 
 def read_text(path):
     try:
-        with open(path, "r", encoding="utf-8") as f:
-            return f.read()
-    except Exception:
+        return path.read_text(encoding="utf-8")
+    except (OSError, UnicodeDecodeError):
         return ""
 
-def first_heading(md):
+
+def clean_inline(text):
+    text = re.sub(r"!\[[^]]*\]\([^)]*\)", "", text)
+    text = re.sub(r"\[([^]]+)\]\([^)]*\)", r"\1", text)
+    text = re.sub(r"<[^>]+>", " ", text)
+    text = re.sub(r"[`*_~]", "", text)
+    text = text.replace("—", "-").replace("–", "-")
+    text = html.unescape(text)
+    return re.sub(r"\s+", " ", text).strip(" #>|-")
+
+
+def first_heading(md, fallback):
     for line in md.splitlines():
-        if line.startswith("# "):
-            return line[2:].strip()
-        if re.match(r"^#+\\s+", line):
-            return re.sub(r"^#+\\s+", "", line).strip()
-    return ""
+        match = re.match(r"^#{1,6}\s+(.+)$", line.strip())
+        if match:
+            return clean_inline(match.group(1)) or fallback
+    return fallback
+
 
 def first_paragraph(md):
-    lines = [l.strip() for l in md.splitlines()]
-    buf = []
-    for l in lines:
-        if not l or l.startswith("#"):
-            if buf:
-                break
-            else:
-                continue
-        buf.append(l)
-    return " ".join(buf).strip()[:300]
+    in_code = False
+    paragraphs = []
+    current = []
+
+    for raw_line in md.splitlines():
+        line = raw_line.strip()
+        if line.startswith("```"):
+            in_code = not in_code
+            continue
+        if in_code:
+            continue
+        if not line:
+            if current:
+                paragraphs.append(" ".join(current))
+                current = []
+            continue
+        if re.match(r"^#{1,6}\s+", line) or line == "---":
+            if current:
+                paragraphs.append(" ".join(current))
+                current = []
+            continue
+        if line.startswith("|") or line.startswith("<table") or line.startswith("<img"):
+            continue
+        if re.match(r"^[-*+]\s+\[[ xX]\]", line):
+            continue
+
+        cleaned = clean_inline(re.sub(r"^>+\s*", "", line))
+        if not cleaned:
+            continue
+        if re.search(r"正在编写中|敬请期待", cleaned):
+            continue
+        current.append(cleaned)
+        if len(" ".join(current)) >= 80:
+            paragraphs.append(" ".join(current))
+            break
+
+    if current and not paragraphs:
+        paragraphs.append(" ".join(current))
+
+    description = next((item for item in paragraphs if len(item) >= 18), "")
+    if not description:
+        return "打开文档查看完整内容、实践步骤与延伸资源。"
+    return description[:180].rstrip("，,。 ") + ("。" if not description.endswith("。") else "")
+
 
 def category_for_path(rel):
     parts = rel.split("/")
-    if parts[0] == "docs":
-        if len(parts) > 1:
-            sec = parts[1]
-            if sec.startswith("02-tech-stack"):
-                return "Agent"
-            if sec.startswith("04-interview"):
-                return "求职"
-            if sec.startswith("05-roadmaps"):
-                return "路线"
-            if sec.startswith("03-practice"):
-                return "实战"
-            if sec.startswith("01-theory"):
-                return "理论"
-        return "教程"
+    if parts[0] == "docs" and len(parts) > 1:
+        section = parts[1]
+        if section.startswith("00-getting-started"):
+            return "快速开始"
+        if section.startswith("01-theory"):
+            return "理论"
+        if section.startswith("02-tech-stack"):
+            return "技术栈"
+        if section.startswith("03-practice"):
+            return "项目实战"
+        if section.startswith("04-interview"):
+            return "面试求职"
+        if section.startswith("05-roadmaps"):
+            return "学习路线"
+        return "技术栈"
     if parts[0] == "resources":
-        if len(parts) > 1:
-            if parts[1] == "rag":
-                return "RAG"
-            if parts[1] == "agent":
-                return "Agent"
-        return "资源"
+        return "资源合集"
     if parts[0] == "projects":
-        return "项目"
+        return "开源项目"
     return "其他"
 
-def type_for_path(rel):
-    parts = rel.split("/")
-    if parts[0] == "projects":
-        return "项目索引"
-    if parts[0] == "resources":
-        if "papers" in parts:
-            return "论文合集"
-        return "资源"
-    if parts[0] == "docs":
-        if parts[1].startswith("04-interview"):
-            return "指南"
-        if parts[1].startswith("05-roadmaps"):
-            return "路线"
-        return "教程"
-    return "文档"
 
-def mtime_date(path):
+def type_for_path(rel, title):
+    lowered = f"{rel} {title}".lower()
+    if rel.startswith("projects/"):
+        return "项目"
+    if rel.startswith("resources/"):
+        return "论文清单" if "paper" in lowered or "论文" in title else "资源清单"
+    if "/04-interview/" in f"/{rel}":
+        return "题库" if re.search(r"题|question|coding|interview-bank", lowered) else "求职指南"
+    if "/05-roadmaps/" in f"/{rel}":
+        return "路线图"
+    if "/03-practice/" in f"/{rel}":
+        return "实战指南"
+    if "/00-getting-started/" in f"/{rel}":
+        return "入门指南"
+    if "/01-theory/" in f"/{rel}":
+        return "原理教程"
+    return "深度教程"
+
+
+def level_for_text(rel, title, md):
+    sample = f"{rel} {title} {md[:1600]}".lower()
+    if re.search(r"入门|基础|从零|第一周|7天|7 天|what is|getting.started|概念", sample):
+        return "入门"
+    if re.search(r"高阶|高级|生产级|系统设计|源码|benchmark|评测|安全|强化学习|post.training|完整指南|deep.dive|专项", sample):
+        return "高阶"
+    return "进阶"
+
+
+def tags_for_text(rel, title, md):
+    sample = f"{rel} {title} {md[:8000]}".lower()
+    tags = [name for name, pattern in TAG_RULES if re.search(pattern, sample, re.IGNORECASE)]
+    return tags[:5] or [category_for_path(rel)]
+
+
+def content_stats(md):
+    without_code = re.sub(r"```.*?```", " ", md, flags=re.DOTALL)
+    plain = clean_inline(without_code)
+    units = re.findall(r"[\u4e00-\u9fff]|[A-Za-z0-9_]+", plain)
+    word_count = len(units)
+    return word_count, max(1, math.ceil(word_count / 400))
+
+
+def status_for_text(md, word_count):
+    has_placeholder = bool(re.search(r"正在编写中|敬请期待|TODO|待补充|待完善", md, re.IGNORECASE))
+    return "建设中" if has_placeholder and word_count < 800 else "已完善"
+
+
+def git_date(path):
     try:
-        ts = os.path.getmtime(path)
-        return datetime.fromtimestamp(ts).strftime("%Y-%m-%d")
-    except Exception:
+        result = subprocess.run(
+            ["git", "log", "-1", "--format=%cs", "--", str(path.relative_to(ROOT))],
+            cwd=ROOT,
+            check=False,
+            capture_output=True,
+            text=True,
+        )
+        date = result.stdout.strip()
+        if re.fullmatch(r"\d{4}-\d{2}-\d{2}", date):
+            return date
+    except (OSError, ValueError):
+        pass
+    try:
+        return datetime.fromtimestamp(path.stat().st_mtime).strftime("%Y-%m-%d")
+    except OSError:
         return datetime.now().strftime("%Y-%m-%d")
 
-def build_url(rel):
-    return f"https://github.com/{OWNER_REPO}/blob/main/{rel}"
 
-def collect():
+def build_url(rel):
+    return f"https://github.com/{OWNER_REPO}/blob/main/{quote(rel, safe='/')}"
+
+
+def collect_resources():
     items = []
     for base in INCLUDE_DIRS:
-        for root, _, files in os.walk(base):
-            for fn in files:
-                if not fn.lower().endswith(".md"):
-                    continue
-                path = os.path.join(root, fn)
-                rel = os.path.relpath(path, ROOT).replace("\\", "/")
-                md = read_text(path)
-                title = first_heading(md) or os.path.splitext(fn)[0]
-                desc = first_paragraph(md)
-                item = {
-                    "id": re.sub(r"[^a-z0-9]+", "-", title.lower()).strip("-"),
-                    "title": title,
-                    "description": desc,
-                    "category": category_for_path(rel),
-                    "tags": [],
-                    "level": "入门",
-                    "type": type_for_path(rel),
-                    "url": build_url(rel),
-                    "date": mtime_date(path),
-                    "featured": False,
-                }
-                items.append(item)
-    # sort: featured, date desc, title
-    items.sort(key=lambda x: (not x.get("featured", False), x.get("date", "")), reverse=True)
+        if not base.exists():
+            continue
+        for path in sorted(base.rglob("*.md")):
+            rel = path.relative_to(ROOT).as_posix()
+            md = read_text(path)
+            title = first_heading(md, path.stem)
+            word_count, reading_minutes = content_stats(md)
+            item = {
+                "id": "doc-" + re.sub(r"[^a-z0-9]+", "-", rel.lower()).strip("-"),
+                "title": title,
+                "description": first_paragraph(md),
+                "category": category_for_path(rel),
+                "tags": tags_for_text(rel, title, md),
+                "level": level_for_text(rel, title, md),
+                "type": type_for_path(rel, title),
+                "url": build_url(rel),
+                "sourcePath": rel,
+                "date": git_date(path),
+                "readingMinutes": reading_minutes,
+                "wordCount": word_count,
+                "status": status_for_text(md, word_count),
+                "featured": rel in FEATURED_PATHS,
+                "external": False,
+            }
+            items.append(item)
+
+    items.extend(CURATED_EXTERNAL)
+    items.sort(
+        key=lambda item: (
+            not item["featured"],
+            item["status"] != "已完善",
+            -int(item["date"].replace("-", "")),
+            item["title"].lower(),
+        )
+    )
     return items
 
+
+def sitemap_urls():
+    today = datetime.now().strftime("%Y-%m-%d")
+    urls = [
+        (f"{SITE_ROOT}/", today, "daily", "1.0"),
+        (f"{SITE_ROOT}/research/", today, "weekly", "0.9"),
+        (f"{SITE_ROOT}/research/docs/", today, "weekly", "0.8"),
+        (f"{SITE_ROOT}/research/skills/", today, "weekly", "0.8"),
+        (f"{SITE_ROOT}/interview/", today, "daily", "0.9"),
+        (f"{SITE_ROOT}/interview/hot/", today, "daily", "0.9"),
+        (f"{SITE_ROOT}/interview/categories/", today, "weekly", "0.8"),
+        (f"{SITE_ROOT}/interview/companies/", today, "weekly", "0.8"),
+    ]
+
+    research_content = ROOT / "external/ai-research-ebook/src/content/docs"
+    if research_content.exists():
+        for path in sorted(research_content.rglob("*.mdx")):
+            slug = path.relative_to(research_content).with_suffix("").as_posix()
+            urls.append((f"{SITE_ROOT}/research/docs/{slug}/", today, "monthly", "0.7"))
+
+    interview_data = ROOT / "external/InterviewGuide/src/data"
+    questions_path = interview_data / "questions.json"
+    categories_path = interview_data / "categories.json"
+    companies_path = interview_data / "companies.json"
+
+    if questions_path.exists():
+        for question in json.loads(read_text(questions_path)):
+            urls.append((f"{SITE_ROOT}/interview/questions/{quote(question['id'], safe='')}/", today, "monthly", "0.6"))
+
+    category_slugs = {
+        "项目与行为面试": "project-behavior",
+        "nlp与大模型": "nlp-llm",
+        "编程与算法": "coding-algorithms",
+        "机器学习基础": "ml-fundamentals",
+        "推荐系统": "recommender-systems",
+        "深度学习": "deep-learning",
+        "机器学习系统": "ml-systems",
+        "计算机视觉": "computer-vision",
+        "ai系统设计": "ai-system-design",
+    }
+    if categories_path.exists():
+        for category in json.loads(read_text(categories_path)):
+            slug = category_slugs.get(category["key"], quote(category["key"], safe=""))
+            urls.append((f"{SITE_ROOT}/interview/categories/{slug}/", today, "weekly", "0.7"))
+
+    company_slugs = {
+        "字节跳动": "bytedance", "美团": "meituan", "腾讯": "tencent", "百度": "baidu",
+        "阿里巴巴": "alibaba", "小红书": "xiaohongshu", "未知": "unknown", "通用题库": "general-bank",
+        "华为": "huawei", "京东": "jd", "小米": "xiaomi", "蚂蚁集团": "ant-group",
+        "拼多多": "pinduoduo", "OPPO": "oppo", "滴滴": "didi", "网易": "netease",
+        "哔哩哔哩": "bilibili", "荣耀": "honor", "商汤": "sensetime", "联想": "lenovo",
+        "VIVO": "vivo", "携程": "trip-com", "知乎": "zhihu", "快手": "kuaishou",
+        "阿里（阿里云 / 达摩院）": "alibaba-cloud-damo", "阿里（阿里妈妈）": "alimama",
+        "虾皮 Shopee": "shopee", "B 站": "bilibili-b",
+    }
+    if companies_path.exists():
+        for company in json.loads(read_text(companies_path)):
+            slug = company_slugs.get(company["name"], quote(company["name"], safe=""))
+            urls.append((f"{SITE_ROOT}/interview/companies/{slug}/", today, "weekly", "0.7"))
+
+    return urls
+
+
+def write_sitemap():
+    lines = [
+        '<?xml version="1.0" encoding="UTF-8"?>',
+        '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
+    ]
+    for location, lastmod, changefreq, priority in sitemap_urls():
+        lines.extend([
+            "  <url>",
+            f"    <loc>{html.escape(location)}</loc>",
+            f"    <lastmod>{lastmod}</lastmod>",
+            f"    <changefreq>{changefreq}</changefreq>",
+            f"    <priority>{priority}</priority>",
+            "  </url>",
+        ])
+    lines.append("</urlset>")
+    (ROOT / "sitemap.xml").write_text("\n".join(lines) + "\n", encoding="utf-8")
+    return len(lines)
+
+
 def main():
-    items = collect()
-    out_dir = os.path.join(ROOT, "data")
-    os.makedirs(out_dir, exist_ok=True)
-    out_path = os.path.join(out_dir, "resources.json")
-    with open(out_path, "w", encoding="utf-8") as f:
-        json.dump(items, f, ensure_ascii=False, indent=2)
-    print(f"Wrote {len(items)} resources to {out_path}")
+    items = collect_resources()
+    output_dir = ROOT / "data"
+    output_dir.mkdir(parents=True, exist_ok=True)
+    output_path = output_dir / "resources.json"
+    output_path.write_text(json.dumps(items, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    write_sitemap()
+    print(f"Wrote {len(items)} resources to {output_path}")
+    print(f"Wrote {len(sitemap_urls())} canonical URLs to {ROOT / 'sitemap.xml'}")
+
 
 if __name__ == "__main__":
     main()
-
-
-    
