@@ -50,11 +50,12 @@
 - [📚 学习路线图](#-第三步基于岗位的学习路线) - 算法岗10-15周 | 开发岗8-12周
 - [💼 实战项目](#-第四步完成实战项目可写进简历) - 开源优质项目合集+N X Agent项目
 - [📖 技术教程](#-第五步系统学习-agent-技术技术准备) - LangGraph、RAG、上下文工程、监督微调、强化学习
-- [🎯 面试题库](#-第六步面试准备与-offer-冲刺) - 1000+题、系统设计、编程题
+- [🎯 面试题库](#-第六步面试准备与-offer-冲刺) - 1500+题/面经、系统设计、编程题
 
 **🛠️ 快速导航**：
 - [🚀 10分钟快速开始](#-快速开始) | [💬 加入学习社群](#-联系作者--加入社群) | [❓ 常见问题](./FAQ.md)
 - [🧭 新手快速开始](./docs/00-getting-started/README.md) | [🧭 2026 Agent 求职路线](./docs/05-roadmaps/agent-job-ready-roadmap-2026.md) | [🛠️ Agent 项目落地方法](./docs/03-practice/05-ship-agent-project.md) | [🧩 Agent Harness Engineering](./docs/02-tech-stack/27-agent-harness-engineering.md)
+- [🔬 前沿算法完整路线](./docs/05-roadmaps/algorithm-complete-learning-guide.md) | [🤖 具身智能/VLA路线](./docs/05-roadmaps/embodied-ai-vla-learning-guide.md) | [💻 算法+AI手撕题库](./docs/04-interview/18-algorithm-ai-coding-question-bank.md) | [📋 小红书AI算法岗面经](./docs/04-interview/19-xiaohongshu-ai-algorithm-interview-bank.md)
 - [📄 Paper Agent](./projects/01-paper-agent/README.md) | [🧳 Travel Agent](./projects/02-travel-agent/README.md) | [🌐 Web Agent](./projects/03-web-agent/README.md) | [🖼️ Multimodal RAG](./resources/multimodal/README.md)
 
 ---
@@ -822,6 +823,10 @@ Agent 方向变化很快，当前更值得投入的是能落地、能验证、�
 
 **🚀 新手推荐**：
 - 📘 [**AgentGuide开源学习路线（简易版）**](./docs/05-roadmaps/AgentGuide开源学习路线（简易版本）.md) - **从零到Offer完整路径**，8-15周系统化学习方案，包含完整资源清单 ⭐⭐⭐
+
+**🔬 算法 / 具身方向新增**：
+- 🧠 [前沿算法岗位完整学习指南](./docs/05-roadmaps/algorithm-complete-learning-guide.md) - 覆盖算法岗从工程基础、模型训练、RAG/Agent、多模态到推理部署的完整能力栈
+- 🤖 [具身智能与 VLA 完整学习指南](./docs/05-roadmaps/embodied-ai-vla-learning-guide.md) - 面向 VLA/机器人岗位的多模态、动作建模、仿真、Sim2Real 与数据闭环路线
 
 **📋 详细路线**（按岗位分）：
 
@@ -1760,7 +1765,7 @@ AgentGuide 提供 **n 个简历级实战项目**，每个项目都提供：
 > 💡 **学习目标**：系统准备面试，提升 Offer 成功率  
 > 📝 **两条线不同的面试策略**：算法岗讲创新，开发岗讲价值
 
-#### 📚 完整面试题库（300+题）🔥 全面升级
+#### 📚 完整面试题库（1500+题/面经）🔥 全面升级
 
 > **🎯 题库特色**：
 > - ✅ 完整覆盖 LLM/VLM/RLHF/RAG/Agent 全技术栈
@@ -1810,6 +1815,9 @@ AgentGuide 提供 **n 个简历级实战项目**，每个项目都提供：
 - [x] [💻 大模型手撕刷题路线](./docs/04-interview/17-coding-exercises.md) 🆕
   - 分阶段刷题：神经网络基础算子 → Attention 机制 → 位置编码 → 优化技术
   - 按难度分级，系统化刷题指南
+- [x] [🧩 算法题：传统算法与 AI 手撕分类版](./docs/04-interview/18-algorithm-ai-coding-question-bank.md) 🆕
+  - 503 道，覆盖数组/链表/树/图/动态规划/训练推理/CUDA 等分类
+  - 保留公司来源和难度标签，适合按专题刷题
 
 </td>
 </tr>
@@ -1824,6 +1832,7 @@ AgentGuide 提供 **n 个简历级实战项目**，每个项目都提供：
 
 - [x] [📋 大厂真实面经](./docs/04-interview/12-company-interview-cases.md) - 美团/字节/阿里等16个完整案例
 - [x] [🧭 AI Agent 面试备战手册合集](./docs/04-interview/18-agent-interview-playbooks/) - Memory、Skills、Harness、评估、数据合成、源码分析与项目话术
+- [x] [📚 1000篇小红书AI算法岗面经：难度递增整合版](./docs/04-interview/19-xiaohongshu-ai-algorithm-interview-bank.md) 🆕 - 按编程、ML/DL、RAG/Agent、多模态、系统设计等难度递增整理
 - [x] [📊 模型评估专题](./docs/04-interview/13-model-evaluation.md) - BLEU/ROUGE、基准测试、LLM-as-Judge **10题**
 - [x] [🔮 前景与趋势](./docs/04-interview/14-llm-future-trends.md) - AGI、多模态、世界模型等开放讨论 **9题**
 - [x] [💬 开放性讨论](./docs/04-interview/15-open-discussion.md) - 技术判断、学习建议、核心素质 **8题**
@@ -2090,6 +2099,8 @@ python quickstart_rag_agent.py
 - 🧭 [2026 Agent 求职通关路线](./docs/05-roadmaps/agent-job-ready-roadmap-2026.md) - Agent Loop、Harness、Skills、Eval、项目产出的可执行路线 ⭐ 新增
 - 🚀 [AgentGuide开源学习路线（简易版）](./docs/05-roadmaps/AgentGuide开源学习路线（简易版本）.md) - 从零到Offer完整路径（8-15周）⭐ 新增
 - 🔬 [算法岗详细路线](./docs/05-roadmaps/learning-roadmap-algorithm.md) - 每日学习计划
+- 🧠 [前沿算法岗位完整学习指南](./docs/05-roadmaps/algorithm-complete-learning-guide.md) - 覆盖算法岗位能力栈、实践任务和交付标准
+- 🤖 [具身智能与 VLA 完整学习指南](./docs/05-roadmaps/embodied-ai-vla-learning-guide.md) - 面向 VLA/机器人岗位的系统学习路线
 - 🛠️ [开发岗详细路线](./docs/05-roadmaps/learning-roadmap-development.md) - 每日学习计划
 
 ### 💼 实战方法
@@ -2101,6 +2112,8 @@ python quickstart_rag_agent.py
 - 📊 [RAG 资源总览](./resources/rag/) - RAG 所有资源
 - 🛠️ [开发工具箱](./resources/tools.md) - 效率工具推荐
 - 📚 [精选学习资源](./resources/learning-resources.md) - 课程、教程、书籍汇总
+- 💻 [算法+AI手撕题库](./docs/04-interview/18-algorithm-ai-coding-question-bank.md) - 传统算法与 AI 手撕分类版
+- 📋 [小红书AI算法岗面经题库](./docs/04-interview/19-xiaohongshu-ai-algorithm-interview-bank.md) - 难度递增整合版
 
 ---
 

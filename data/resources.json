@@ -1,5 +1,53 @@
 [
   {
+    "id": "ai",
+    "title": "算法题：传统算法与AI手撕分类版",
+    "description": "> 共 503 道；传统算法沿用十二大类，AI/ML/训练推理/CUDA现场实现统一归入“AI手撕题”；已删除 45 条无具体题干的噪音记录。",
+    "category": "求职",
+    "tags": [],
+    "level": "入门",
+    "type": "指南",
+    "url": "https://github.com/adongwanai/AgentGuide/blob/main/docs/04-interview/18-algorithm-ai-coding-question-bank.md",
+    "date": "2026-07-27",
+    "featured": false
+  },
+  {
+    "id": "1000-ai",
+    "title": "1000篇小红书AI算法岗面经：难度递增整合版",
+    "description": "> 相似题目按考察意图保守整合；不同限制条件、子问、场景和实现要求均保留。各二级分类内按难度递增排列。",
+    "category": "求职",
+    "tags": [],
+    "level": "入门",
+    "type": "指南",
+    "url": "https://github.com/adongwanai/AgentGuide/blob/main/docs/04-interview/19-xiaohongshu-ai-algorithm-interview-bank.md",
+    "date": "2026-07-27",
+    "featured": false
+  },
+  {
+    "id": "",
+    "title": "前沿算法岗位完整学习指南",
+    "description": "> 基于北上杭深真实算法岗位的技术职责、硬要求和加分项生成。生成时间：2026-07-15T16:13:26+08:00。",
+    "category": "路线",
+    "tags": [],
+    "level": "入门",
+    "type": "路线",
+    "url": "https://github.com/adongwanai/AgentGuide/blob/main/docs/05-roadmaps/algorithm-complete-learning-guide.md",
+    "date": "2026-07-27",
+    "featured": false
+  },
+  {
+    "id": "vla",
+    "title": "具身智能与 VLA 完整学习指南",
+    "description": "> 基于已筛选的真实岗位职责、硬要求与加分项整理。生成时间：2026-07-10T12:43:12+08:00。",
+    "category": "路线",
+    "tags": [],
+    "level": "入门",
+    "type": "路线",
+    "url": "https://github.com/adongwanai/AgentGuide/blob/main/docs/05-roadmaps/embodied-ai-vla-learning-guide.md",
+    "date": "2026-07-27",
+    "featured": false
+  },
+  {
     "id": "ai-agent-agent",
     "title": "AI Agent 面试题库 - Agent 核心篇",
     "description": "- ✅ Agent 算法工程师（必学，优化策略） - ✅ Agent 开发工程师（必学，系统搭建） - ⏱️ 建议学习时间：算法岗5天，开发岗4天",
