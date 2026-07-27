@@ -53,6 +53,7 @@
 - [🎯 面试题库](#-第六步面试准备与-offer-冲刺) - 1500+题/面经、系统设计、编程题
 
 **🛠️ 快速导航**：
+- ⭐ 阿东作品推荐：[**learn-workbuddy**](https://github.com/adongwanai/learn-workbuddy) - 从 0 搭建 WorkBuddy-style Desktop Agent Harness，clean-room 教学复现 Agent Loop、工具调用、上下文工程、长期记忆、Sidecar、权限审计和真实模型评测
 - [🚀 10分钟快速开始](#-快速开始) | [💬 加入学习社群](#-联系作者--加入社群) | [❓ 常见问题](./FAQ.md)
 - [🧭 新手快速开始](./docs/00-getting-started/README.md) | [🧭 2026 Agent 求职路线](./docs/05-roadmaps/agent-job-ready-roadmap-2026.md) | [🛠️ Agent 项目落地方法](./docs/03-practice/05-ship-agent-project.md) | [🧩 Agent Harness Engineering](./docs/02-tech-stack/27-agent-harness-engineering.md)
 - [🔬 前沿算法完整路线](./docs/05-roadmaps/algorithm-complete-learning-guide.md) | [🤖 具身智能/VLA路线](./docs/05-roadmaps/embodied-ai-vla-learning-guide.md) | [💻 算法+AI手撕题库](./docs/04-interview/18-algorithm-ai-coding-question-bank.md) | [📋 小红书AI算法岗面经](./docs/04-interview/19-xiaohongshu-ai-algorithm-interview-bank.md)
@@ -383,9 +384,9 @@
 
 | 资源 | 简介 | 链接 |
 |:---|:---|:---|
+| **learn-workbuddy** | 从 0 搭建一个 WorkBuddy-style Desktop Agent Harness：clean-room 教学复现 Agent Loop、工具调用、上下文工程、长期记忆、Sidecar、权限审计和真实模型评测，不提取源码，只复现核心机制 | [GitHub](https://github.com/adongwanai/learn-workbuddy) |
 | **Learn Claude Code** | 从零构建迷你Claude Code，12节渐进式，覆盖工具调用/子Agent/上下文压缩/多Agent协作 | [GitHub](https://github.com/shareAI-lab/learn-claude-code) |
 | **claw0** | 10章10个核心概念~7000行Python，从while循环到生产级Agent网关 | [GitHub](https://github.com/shareAI-lab/claw0) |
-| **learn-workbuddy** | 从 0 搭建一个 WorkBuddy-style Desktop Agent Harness：clean-room 教学复现 Agent Loop、工具调用、上下文工程、长期记忆、Sidecar、权限审计和真实模型评测，不提取源码，只复现核心机制 | [GitHub](https://github.com/adongwanai/learn-workbuddy) |
 | **hello-agents（Datawhale）** | 《从零开始构建智能体》，16章，含MCP实战、DeepResearch复现、多Agent协同 | [GitHub](https://github.com/datawhalechina/hello-agents) |
 | **OpenClaw** | 生产级个人AI助手框架，支持Telegram/Discord/Slack等 | [GitHub](https://github.com/openclaw/openclaw) |
 | **Anthropic官方：Building Effective Agents** | Anthropic工程团队出的Agent设计原则，面试必读 | [链接](https://www.anthropic.com/engineering/building-effective-agents) |
