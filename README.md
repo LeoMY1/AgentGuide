@@ -385,12 +385,15 @@
 | 资源 | 简介 | 链接 |
 |:---|:---|:---|
 | **learn-workbuddy** | 从 0 搭建一个 WorkBuddy-style Desktop Agent Harness：clean-room 教学复现 Agent Loop、工具调用、上下文工程、长期记忆、Sidecar、权限审计和真实模型评测，不提取源码，只复现核心机制 | [GitHub](https://github.com/adongwanai/learn-workbuddy) |
+| **Superpowers** | 由可组合 Skills 构成的 AI Coding 完整开发工作流，覆盖需求梳理、计划、TDD、系统调试、代码评审和完成前验证 | [GitHub](https://github.com/obra/superpowers) |
 | **Learn Claude Code** | 从零构建迷你Claude Code，12节渐进式，覆盖工具调用/子Agent/上下文压缩/多Agent协作 | [GitHub](https://github.com/shareAI-lab/learn-claude-code) |
 | **claw0** | 10章10个核心概念~7000行Python，从while循环到生产级Agent网关 | [GitHub](https://github.com/shareAI-lab/claw0) |
 | **hello-agents（Datawhale）** | 《从零开始构建智能体》，16章，含MCP实战、DeepResearch复现、多Agent协同 | [GitHub](https://github.com/datawhalechina/hello-agents) |
 | **OpenClaw** | 生产级个人AI助手框架，支持Telegram/Discord/Slack等 | [GitHub](https://github.com/openclaw/openclaw) |
 | **Anthropic官方：Building Effective Agents** | Anthropic工程团队出的Agent设计原则，面试必读 | [链接](https://www.anthropic.com/engineering/building-effective-agents) |
 | **Vibe Coding 教程** | 从零掌握AI协作编程，Cursor/Claude Code实操指南，Vibe Coding面试攻略 | [链接](https://adongwanai.github.io/vibecoding/) |
+
+> **后续实践重点**：在 Superpowers 的 Skills 工作流基础上，我将重点使用 `grill-me` / `grilling` 系列 Skills。它们会一次只追问一个问题，逐项压测计划、决策与设计中的假设、依赖、边界和取舍；达成共同理解后，再进入实现。
 
 ---
 
