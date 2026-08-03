@@ -82,7 +82,7 @@ Agent Harness 工程
 
 **目标**：理解上下文工程的核心概念
 
-1. **[context-engineering-practices.md](./context-engineering-practices.md)** ⭐ **必读**
+1. **[context-engineering-practices.md](./11-context-engineering-practices.md)** ⭐ **必读**
    - 600字快速了解上下文工程
    - 业界实践（Claude Code、Manus、Kiro）
    - 适合：快速建立全局认知
@@ -134,7 +134,7 @@ Agent Harness 工程
   - 适合：算法工程师优化模型
 
 #### 第六步：总结失败经验
-- **[lessons-learned.md](./lessons-learned.md)**
+- **[lessons-learned.md](./23-lessons-learned.md)**
   - 真实项目的坑与教训
   - 如何避免常见错误
   - 适合：少走弯路
@@ -185,7 +185,7 @@ Agent Harness 工程
 
 ### ⭐ 必读文档（5篇）
 
-#### 1. [context-engineering-practices.md](./context-engineering-practices.md)
+#### 1. [context-engineering-practices.md](./11-context-engineering-practices.md)
 **一句话总结**：业界主流产品的上下文工程实践精华
 
 **核心内容**：
@@ -315,7 +315,7 @@ Agent Harness 工程
 
 ---
 
-#### 8. [lessons-learned.md](./lessons-learned.md)
+#### 8. [lessons-learned.md](./23-lessons-learned.md)
 **一句话总结**：真实项目的坑与教训
 
 **核心内容**：
@@ -468,7 +468,7 @@ Agent Harness 工程
 
 ### ⭐ 上下文工程资源合集（必看！）
 
-**[📖 全网最全最优质的上下文工程资源合集](./context-engineering-resources.md)** 🔥
+**[📖 全网最全最优质的上下文工程资源合集](./13-context-engineering-resources.md)** 🔥
 
 涵盖 18+ 篇核心资源：
 - ✅ **核心概念**：Philipp Schmid、上下文工程 2.0
