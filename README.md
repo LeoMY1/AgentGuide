@@ -691,7 +691,7 @@ Agent 方向变化很快，当前更值得投入的是能落地、能验证、�
 
 </details>
 
-**📖 完整技术方向详解**：[转行大模型热门方向准备指南](./docs/04-interview/06-career-transition.md)
+**📖 完整技术方向详解**：[转行大模型热门方向准备指南](./docs/04-interview/07-career-transition.md)
 
 > **💡 新手建议**：优先选择**上下文工程开发**（RAG/Agent 系统），岗位最多、最易落地
 
@@ -1862,8 +1862,8 @@ AgentGuide 提供 **n 个简历级实战项目**，每个项目都提供：
 ```
 
 #### 求职软技能
-- [x] [📝 简历编写指南](./docs/04-interview/12-resume-guide.md) - AI Agent 项目简历公式、双岗写法与自检脚本
-- [x] [🎤 项目讲述技巧](./docs/04-interview/13-storytelling.md) - STAR+Tech 项目表达、追问地图与复盘模板
+- [x] [📝 简历编写指南](./docs/04-interview/20-resume-guide.md) - AI Agent 项目简历公式、双岗写法与自检脚本
+- [x] [🎤 项目讲述技巧](./docs/04-interview/21-storytelling.md) - STAR+Tech 项目表达、追问地图与复盘模板
 - [x] [⭐ 转行大模型指南](./docs/04-interview/07-career-transition.md)
 - [x] [⭐ 秋招完整攻略](./docs/04-interview/08-job-hunting-guide.md)
 
