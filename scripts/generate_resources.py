@@ -241,7 +241,10 @@ def status_for_text(md, word_count):
     return "建设中" if has_placeholder and word_count < 800 else "已完善"
 
 
-def git_date(path):
+_GIT_DATE_CACHE = {}
+
+
+def _git_date_uncached(path):
     try:
         result = subprocess.run(
             ["git", "log", "-1", "--format=%cs", "--", str(path.relative_to(ROOT))],
@@ -259,6 +262,21 @@ def git_date(path):
         return datetime.fromtimestamp(path.stat().st_mtime).strftime("%Y-%m-%d")
     except OSError:
         return datetime.now().strftime("%Y-%m-%d")
+
+
+def git_date(path):
+    # sitemap 现在按内容来源文件取日期，同一文件会被多次查询
+    # （例如 12960 条题目页共用 questions.json），缓存避免重复 fork git。
+    key = str(path)
+    if key not in _GIT_DATE_CACHE:
+        _GIT_DATE_CACHE[key] = _git_date_uncached(path)
+    return _GIT_DATE_CACHE[key]
+
+
+def newest_git_date(paths, fallback):
+    """取一组文件中最新的提交日期；集合为空时回退到 fallback。"""
+    dates = [git_date(path) for path in paths]
+    return max(dates) if dates else fallback
 
 
 def build_url(rel):
@@ -307,32 +325,46 @@ def collect_resources():
 
 
 def sitemap_urls():
-    today = datetime.now().strftime("%Y-%m-%d")
-    urls = [
-        (f"{SITE_ROOT}/", today, "daily", "1.0"),
-        (f"{SITE_ROOT}/research/", today, "weekly", "0.9"),
-        (f"{SITE_ROOT}/research/docs/", today, "weekly", "0.8"),
-        (f"{SITE_ROOT}/research/skills/", today, "weekly", "0.8"),
-        (f"{SITE_ROOT}/interview/", today, "daily", "0.9"),
-        (f"{SITE_ROOT}/interview/hot/", today, "daily", "0.9"),
-        (f"{SITE_ROOT}/interview/categories/", today, "weekly", "0.8"),
-        (f"{SITE_ROOT}/interview/companies/", today, "weekly", "0.8"),
-    ]
+    """生成 sitemap 条目，lastmod 取自各 URL 对应内容来源文件的最后提交日期。
+
+    此前所有条目统一使用 datetime.now()，导致两个问题：
+    - 内容未改动时也会产生 diff（跨天即全量重写 13023 行），bot 因此提交空改动
+    - 全站 lastmod 恒为同一天，该字段对搜索引擎失去参考价值
+    """
+    site_date = git_date(ROOT / "index.html")
 
     research_content = ROOT / "external/ai-research-ebook/src/content/docs"
-    if research_content.exists():
-        for path in sorted(research_content.rglob("*.mdx")):
-            slug = path.relative_to(research_content).with_suffix("").as_posix()
-            urls.append((f"{SITE_ROOT}/research/docs/{slug}/", today, "monthly", "0.7"))
+    research_pages = sorted(research_content.rglob("*.mdx")) if research_content.exists() else []
+    research_date = newest_git_date(research_pages, site_date)
 
     interview_data = ROOT / "external/InterviewGuide/src/data"
     questions_path = interview_data / "questions.json"
     categories_path = interview_data / "categories.json"
     companies_path = interview_data / "companies.json"
 
+    # 三个 JSON 各自驱动一批 URL，同一批共用来源文件的日期
+    questions_date = git_date(questions_path) if questions_path.exists() else site_date
+    categories_date = git_date(categories_path) if categories_path.exists() else site_date
+    companies_date = git_date(companies_path) if companies_path.exists() else site_date
+
+    urls = [
+        (f"{SITE_ROOT}/", site_date, "daily", "1.0"),
+        (f"{SITE_ROOT}/research/", research_date, "weekly", "0.9"),
+        (f"{SITE_ROOT}/research/docs/", research_date, "weekly", "0.8"),
+        (f"{SITE_ROOT}/research/skills/", research_date, "weekly", "0.8"),
+        (f"{SITE_ROOT}/interview/", questions_date, "daily", "0.9"),
+        (f"{SITE_ROOT}/interview/hot/", questions_date, "daily", "0.9"),
+        (f"{SITE_ROOT}/interview/categories/", categories_date, "weekly", "0.8"),
+        (f"{SITE_ROOT}/interview/companies/", companies_date, "weekly", "0.8"),
+    ]
+
+    for path in research_pages:
+        slug = path.relative_to(research_content).with_suffix("").as_posix()
+        urls.append((f"{SITE_ROOT}/research/docs/{slug}/", git_date(path), "monthly", "0.7"))
+
     if questions_path.exists():
         for question in json.loads(read_text(questions_path)):
-            urls.append((f"{SITE_ROOT}/interview/questions/{quote(question['id'], safe='')}/", today, "monthly", "0.6"))
+            urls.append((f"{SITE_ROOT}/interview/questions/{quote(question['id'], safe='')}/", questions_date, "monthly", "0.6"))
 
     category_slugs = {
         "项目与行为面试": "project-behavior",
@@ -348,7 +380,7 @@ def sitemap_urls():
     if categories_path.exists():
         for category in json.loads(read_text(categories_path)):
             slug = category_slugs.get(category["key"], quote(category["key"], safe=""))
-            urls.append((f"{SITE_ROOT}/interview/categories/{slug}/", today, "weekly", "0.7"))
+            urls.append((f"{SITE_ROOT}/interview/categories/{slug}/", categories_date, "weekly", "0.7"))
 
     company_slugs = {
         "字节跳动": "bytedance", "美团": "meituan", "腾讯": "tencent", "百度": "baidu",
@@ -363,7 +395,7 @@ def sitemap_urls():
     if companies_path.exists():
         for company in json.loads(read_text(companies_path)):
             slug = company_slugs.get(company["name"], quote(company["name"], safe=""))
-            urls.append((f"{SITE_ROOT}/interview/companies/{slug}/", today, "weekly", "0.7"))
+            urls.append((f"{SITE_ROOT}/interview/companies/{slug}/", companies_date, "weekly", "0.7"))
 
     return urls
 
