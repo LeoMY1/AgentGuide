@@ -1,5 +1,24 @@
 [
   {
+    "id": "doc-docs-04-interview-22-algorithm-ai-coding-question-bank-md",
+    "title": "算法题：传统算法与AI手撕分类版",
+    "description": "共 503 道；传统算法沿用十二大类，AI/ML/训练推理/CUDA现场实现统一归入“AI手撕题”；已删除 45 条无具体题干的噪音记录",
+    "category": "面试求职",
+    "tags": [
+      "面试"
+    ],
+    "level": "进阶",
+    "type": "题库",
+    "url": "https://github.com/adongwanai/AgentGuide/blob/main/docs/04-interview/22-algorithm-ai-coding-question-bank.md",
+    "sourcePath": "docs/04-interview/22-algorithm-ai-coding-question-bank.md",
+    "date": "2026-08-04",
+    "readingMinutes": 55,
+    "wordCount": 21956,
+    "status": "已完善",
+    "featured": true,
+    "external": false
+  },
+  {
     "id": "doc-docs-04-interview-19-xiaohongshu-ai-algorithm-interview-bank-md",
     "title": "1000篇小红书AI算法岗面经：难度递增整合版",
     "description": "相似题目按考察意图保守整合；不同限制条件、子问、场景和实现要求均保留。各二级分类内按难度递增排列",
@@ -148,25 +167,6 @@
     "date": "2026-07-27",
     "readingMinutes": 4,
     "wordCount": 1562,
-    "status": "已完善",
-    "featured": true,
-    "external": false
-  },
-  {
-    "id": "doc-docs-04-interview-18-algorithm-ai-coding-question-bank-md",
-    "title": "算法题：传统算法与AI手撕分类版",
-    "description": "共 503 道；传统算法沿用十二大类，AI/ML/训练推理/CUDA现场实现统一归入“AI手撕题”；已删除 45 条无具体题干的噪音记录",
-    "category": "面试求职",
-    "tags": [
-      "面试"
-    ],
-    "level": "进阶",
-    "type": "题库",
-    "url": "https://github.com/adongwanai/AgentGuide/blob/main/docs/04-interview/18-algorithm-ai-coding-question-bank.md",
-    "sourcePath": "docs/04-interview/18-algorithm-ai-coding-question-bank.md",
-    "date": "2026-07-27",
-    "readingMinutes": 55,
-    "wordCount": 21956,
     "status": "已完善",
     "featured": true,
     "external": false
@@ -378,6 +378,52 @@
     "external": false
   },
   {
+    "id": "doc-docs-04-interview-20-resume-guide-md",
+    "title": "AI Agent 简历编写指南",
+    "description": "简历不是经历流水账，而是让面试官相信你能从 0 到 1 交付 Agent 系统的证据链",
+    "category": "面试求职",
+    "tags": [
+      "Agent",
+      "RAG",
+      "Memory",
+      "MCP",
+      "评测"
+    ],
+    "level": "入门",
+    "type": "求职指南",
+    "url": "https://github.com/adongwanai/AgentGuide/blob/main/docs/04-interview/20-resume-guide.md",
+    "sourcePath": "docs/04-interview/20-resume-guide.md",
+    "date": "2026-08-04",
+    "readingMinutes": 5,
+    "wordCount": 1647,
+    "status": "已完善",
+    "featured": false,
+    "external": false
+  },
+  {
+    "id": "doc-docs-04-interview-21-storytelling-md",
+    "title": "AI Agent 项目讲述技巧",
+    "description": "面试讲项目不是背简历，而是证明你能定义问题、设计系统、处理失败并持续优化",
+    "category": "面试求职",
+    "tags": [
+      "Agent",
+      "RAG",
+      "Memory",
+      "评测",
+      "安全"
+    ],
+    "level": "入门",
+    "type": "求职指南",
+    "url": "https://github.com/adongwanai/AgentGuide/blob/main/docs/04-interview/21-storytelling.md",
+    "sourcePath": "docs/04-interview/21-storytelling.md",
+    "date": "2026-08-04",
+    "readingMinutes": 6,
+    "wordCount": 2005,
+    "status": "已完善",
+    "featured": false,
+    "external": false
+  },
+  {
     "id": "doc-resources-rag-readme-md",
     "title": "RAG 资源总览",
     "description": "本目录汇总 RAG（检索增强生成）方向的选型指南、工程实践与论文清单。 Agent 方向的对应资源见 Agent 资源总览",
@@ -442,6 +488,29 @@
     "date": "2026-08-04",
     "readingMinutes": 7,
     "wordCount": 2785,
+    "status": "已完善",
+    "featured": false,
+    "external": false
+  },
+  {
+    "id": "doc-docs-04-interview-18-agent-interview-playbooks-readme-md",
+    "title": "📌 Section Goals（本节目标）",
+    "description": "﻿# AI Agent 面试备战手册合集。",
+    "category": "面试求职",
+    "tags": [
+      "Agent",
+      "RAG",
+      "Memory",
+      "评测",
+      "面试"
+    ],
+    "level": "入门",
+    "type": "求职指南",
+    "url": "https://github.com/adongwanai/AgentGuide/blob/main/docs/04-interview/18-agent-interview-playbooks/README.md",
+    "sourcePath": "docs/04-interview/18-agent-interview-playbooks/README.md",
+    "date": "2026-08-04",
+    "readingMinutes": 3,
+    "wordCount": 826,
     "status": "已完善",
     "featured": false,
     "external": false
@@ -838,52 +907,6 @@
     "external": false
   },
   {
-    "id": "doc-docs-04-interview-12-resume-guide-md",
-    "title": "AI Agent 简历编写指南",
-    "description": "简历不是经历流水账，而是让面试官相信你能从 0 到 1 交付 Agent 系统的证据链",
-    "category": "面试求职",
-    "tags": [
-      "Agent",
-      "RAG",
-      "Memory",
-      "MCP",
-      "评测"
-    ],
-    "level": "入门",
-    "type": "求职指南",
-    "url": "https://github.com/adongwanai/AgentGuide/blob/main/docs/04-interview/12-resume-guide.md",
-    "sourcePath": "docs/04-interview/12-resume-guide.md",
-    "date": "2026-05-25",
-    "readingMinutes": 5,
-    "wordCount": 1647,
-    "status": "已完善",
-    "featured": false,
-    "external": false
-  },
-  {
-    "id": "doc-docs-04-interview-13-storytelling-md",
-    "title": "AI Agent 项目讲述技巧",
-    "description": "面试讲项目不是背简历，而是证明你能定义问题、设计系统、处理失败并持续优化",
-    "category": "面试求职",
-    "tags": [
-      "Agent",
-      "RAG",
-      "Memory",
-      "评测",
-      "安全"
-    ],
-    "level": "入门",
-    "type": "求职指南",
-    "url": "https://github.com/adongwanai/AgentGuide/blob/main/docs/04-interview/13-storytelling.md",
-    "sourcePath": "docs/04-interview/13-storytelling.md",
-    "date": "2026-05-25",
-    "readingMinutes": 6,
-    "wordCount": 2005,
-    "status": "已完善",
-    "featured": false,
-    "external": false
-  },
-  {
     "id": "doc-docs-04-interview-18-agent-interview-playbooks-agent-evaluation-playbook-md",
     "title": "目标：把 Agent 评测从方法论到工程落地全部打透，面试时能讲得像真正做过 Agent 系统评测的人",
     "description": "﻿# Agent 评测 / Benchmark 彻底备战手册（补充模块对应版） 本手册定位：面向 AI Agent 求职与面试准备的专题复习资料，用于补充 AgentGuide 面试题库与项目讲述材料",
@@ -1109,29 +1132,6 @@
     "date": "2026-05-25",
     "readingMinutes": 17,
     "wordCount": 6595,
-    "status": "已完善",
-    "featured": false,
-    "external": false
-  },
-  {
-    "id": "doc-docs-04-interview-18-agent-interview-playbooks-readme-md",
-    "title": "📌 Section Goals（本节目标）",
-    "description": "﻿# AI Agent 面试备战手册合集。",
-    "category": "面试求职",
-    "tags": [
-      "Agent",
-      "RAG",
-      "Memory",
-      "评测",
-      "面试"
-    ],
-    "level": "入门",
-    "type": "求职指南",
-    "url": "https://github.com/adongwanai/AgentGuide/blob/main/docs/04-interview/18-agent-interview-playbooks/README.md",
-    "sourcePath": "docs/04-interview/18-agent-interview-playbooks/README.md",
-    "date": "2026-05-25",
-    "readingMinutes": 3,
-    "wordCount": 826,
     "status": "已完善",
     "featured": false,
     "external": false
@@ -2707,25 +2707,6 @@
     "date": "2026-05-24",
     "readingMinutes": 1,
     "wordCount": 59,
-    "status": "建设中",
-    "featured": false,
-    "external": false
-  },
-  {
-    "id": "doc-docs-04-interview-06-career-transition-md",
-    "title": "转行攻略",
-    "description": "本文将介绍非科班转行大模型方向的完整路径规划",
-    "category": "面试求职",
-    "tags": [
-      "面试"
-    ],
-    "level": "进阶",
-    "type": "求职指南",
-    "url": "https://github.com/adongwanai/AgentGuide/blob/main/docs/04-interview/06-career-transition.md",
-    "sourcePath": "docs/04-interview/06-career-transition.md",
-    "date": "2026-05-24",
-    "readingMinutes": 1,
-    "wordCount": 55,
     "status": "建设中",
     "featured": false,
     "external": false
