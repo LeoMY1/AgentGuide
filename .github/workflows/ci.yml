@@ -1,0 +1,36 @@
+name: CI
+
+# 运行仓库内已有的校验脚本（tests/）。
+# 这些脚本在 2026-03 修复 /interview/ 404 时写下，用于锁住当时的修复，
+# 但此前没有任何工作流引用它们。
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  checks:
+    name: Static checks
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      # tests/site_static_smoke.test.sh 需要 node --check 校验 assets/site.js
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '22'
+
+      - name: Static site smoke checks
+        run: bash tests/site_static_smoke.test.sh
+
+      - name: InterviewGuide / research integration checks
+        run: bash tests/interviewguide_external_integration.test.sh

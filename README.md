@@ -56,7 +56,7 @@
 - ⭐ 阿东作品推荐：[**learn-workbuddy**](https://github.com/adongwanai/learn-workbuddy) - 从 0 搭建 WorkBuddy-style Desktop Agent Harness，clean-room 教学复现 Agent Loop、工具调用、上下文工程、长期记忆、Sidecar、权限审计和真实模型评测
 - [🚀 10分钟快速开始](#-快速开始) | [💬 加入学习社群](#-联系作者--加入社群) | [❓ 常见问题](./FAQ.md)
 - [🧭 新手快速开始](./docs/00-getting-started/README.md) | [🧭 2026 Agent 求职路线](./docs/05-roadmaps/agent-job-ready-roadmap-2026.md) | [🛠️ Agent 项目落地方法](./docs/03-practice/05-ship-agent-project.md) | [🧩 Agent Harness Engineering](./docs/02-tech-stack/27-agent-harness-engineering.md)
-- [🔬 前沿算法完整路线](./docs/05-roadmaps/algorithm-complete-learning-guide.md) | [🤖 具身智能/VLA路线](./docs/05-roadmaps/embodied-ai-vla-learning-guide.md) | [💻 算法+AI手撕题库](./docs/04-interview/18-algorithm-ai-coding-question-bank.md) | [📋 小红书AI算法岗面经](./docs/04-interview/19-xiaohongshu-ai-algorithm-interview-bank.md)
+- [🔬 前沿算法完整路线](./docs/05-roadmaps/algorithm-complete-learning-guide.md) | [🤖 具身智能/VLA路线](./docs/05-roadmaps/embodied-ai-vla-learning-guide.md) | [💻 算法+AI手撕题库](./docs/04-interview/22-algorithm-ai-coding-question-bank.md) | [📋 小红书AI算法岗面经](./docs/04-interview/19-xiaohongshu-ai-algorithm-interview-bank.md)
 - [📄 Paper Agent](./projects/01-paper-agent/README.md) | [🧳 Travel Agent](./projects/02-travel-agent/README.md) | [🌐 Web Agent](./projects/03-web-agent/README.md) | [🖼️ Multimodal RAG](./resources/multimodal/README.md)
 
 ---
@@ -691,7 +691,7 @@ Agent 方向变化很快，当前更值得投入的是能落地、能验证、�
 
 </details>
 
-**📖 完整技术方向详解**：[转行大模型热门方向准备指南](./docs/04-interview/06-career-transition.md)
+**📖 完整技术方向详解**：[转行大模型热门方向准备指南](./docs/04-interview/07-career-transition.md)
 
 > **💡 新手建议**：优先选择**上下文工程开发**（RAG/Agent 系统），岗位最多、最易落地
 
@@ -1819,7 +1819,7 @@ AgentGuide 提供 **n 个简历级实战项目**，每个项目都提供：
 - [x] [💻 大模型手撕刷题路线](./docs/04-interview/17-coding-exercises.md) 🆕
   - 分阶段刷题：神经网络基础算子 → Attention 机制 → 位置编码 → 优化技术
   - 按难度分级，系统化刷题指南
-- [x] [🧩 算法题：传统算法与 AI 手撕分类版](./docs/04-interview/18-algorithm-ai-coding-question-bank.md) 🆕
+- [x] [🧩 算法题：传统算法与 AI 手撕分类版](./docs/04-interview/22-algorithm-ai-coding-question-bank.md) 🆕
   - 503 道，覆盖数组/链表/树/图/动态规划/训练推理/CUDA 等分类
   - 保留公司来源和难度标签，适合按专题刷题
 
@@ -1862,8 +1862,8 @@ AgentGuide 提供 **n 个简历级实战项目**，每个项目都提供：
 ```
 
 #### 求职软技能
-- [x] [📝 简历编写指南](./docs/04-interview/12-resume-guide.md) - AI Agent 项目简历公式、双岗写法与自检脚本
-- [x] [🎤 项目讲述技巧](./docs/04-interview/13-storytelling.md) - STAR+Tech 项目表达、追问地图与复盘模板
+- [x] [📝 简历编写指南](./docs/04-interview/20-resume-guide.md) - AI Agent 项目简历公式、双岗写法与自检脚本
+- [x] [🎤 项目讲述技巧](./docs/04-interview/21-storytelling.md) - STAR+Tech 项目表达、追问地图与复盘模板
 - [x] [⭐ 转行大模型指南](./docs/04-interview/07-career-transition.md)
 - [x] [⭐ 秋招完整攻略](./docs/04-interview/08-job-hunting-guide.md)
 
@@ -1941,7 +1941,7 @@ AgentGuide 提供 **n 个简历级实战项目**，每个项目都提供：
 
 **🛠️ 通用工具**：
 - [x] [开发者工具箱](./resources/tools.md) - Cursor、元宝、Excalidraw
-- [x] [开发框架总览](./resources/frameworks.md) - 快速框架对比
+- [x] [开发框架总览](./resources/agent/frameworks.md) - 快速框架对比
 
 **🎨 推荐可视化学习资源**：
 - 📊 **[100+ LLM/RL 算法原理图](https://github.com/changyeyu/LLM-RL-Visualized)** - 《大模型算法：强化学习、微调与对齐》作者巨献
@@ -2116,7 +2116,7 @@ python quickstart_rag_agent.py
 - 📊 [RAG 资源总览](./resources/rag/) - RAG 所有资源
 - 🛠️ [开发工具箱](./resources/tools.md) - 效率工具推荐
 - 📚 [精选学习资源](./resources/learning-resources.md) - 课程、教程、书籍汇总
-- 💻 [算法+AI手撕题库](./docs/04-interview/18-algorithm-ai-coding-question-bank.md) - 传统算法与 AI 手撕分类版
+- 💻 [算法+AI手撕题库](./docs/04-interview/22-algorithm-ai-coding-question-bank.md) - 传统算法与 AI 手撕分类版
 - 📋 [小红书AI算法岗面经题库](./docs/04-interview/19-xiaohongshu-ai-algorithm-interview-bank.md) - 难度递增整合版
 
 ---

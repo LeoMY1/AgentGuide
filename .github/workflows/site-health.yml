@@ -1,0 +1,81 @@
+name: Site health
+
+# 定期访问已发布站点的关键 URL，确认它们仍然可达。
+#
+# 背景：/AgentGuide/interview/ 曾在 2026-02-26 上线后 404，直到 2026-03-09
+# 才由外部贡献者提 PR #36 修复，暴露窗口约 11 天。仓库内的其它校验都是对
+# 源文件做断言，没有任何东西会去访问真实站点。
+#
+# 说明：
+# - 只检查 HTTP 状态码。页面返回 200 但内容损坏，这里检测不到。
+# - GitHub 的定时任务不保证准时，高峰期会延迟甚至跳过；6 小时是名义间隔。
+# - 定时工作流的失败通知发给最后修改过下方 cron 表达式的用户。
+
+on:
+  schedule:
+    - cron: '0 */6 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  probe:
+    name: Probe published URLs
+    runs-on: ubuntu-latest
+    steps:
+      - name: Probe published site
+        run: |
+          set -uo pipefail
+          BASE="https://adongwanai.github.io/AgentGuide"
+          failed=0
+
+          {
+            echo "### 站点探测结果"
+            echo
+            echo "| 结果 | 状态码 | 路径 | 覆盖 |"
+            echo "|:---:|:---:|:---|:---|"
+          } >> "$GITHUB_STEP_SUMMARY"
+
+          probe() {
+            path="$1"; expected="$2"; label="$3"
+            # --retry 只对网络错误和 5xx/408/429 生效，404 不会被重试
+            # curl 在连接失败时自身会输出 000，因此这里不再追加，只兜底空值
+            code="$(curl -sS -I -o /dev/null -w '%{http_code}' \
+                      --retry 2 --retry-delay 5 --max-time 30 \
+                      "$BASE$path" 2>/dev/null)" || true
+            code="${code:-000}"
+            if [ "$code" = "$expected" ]; then
+              printf '  ok    %-4s %-38s %s\n' "$code" "$path" "$label"
+              printf '| ✅ | %s | `%s` | %s |\n' "$code" "$path" "$label" >> "$GITHUB_STEP_SUMMARY"
+            else
+              printf '  FAIL  %-4s %-38s %s   (期望 %s)\n' "$code" "$path" "$label" "$expected"
+              printf '| ❌ | %s（期望 %s） | `%s` | %s |\n' "$code" "$expected" "$path" "$label" >> "$GITHUB_STEP_SUMMARY"
+              failed=1
+            fi
+          }
+
+          echo "探测 $BASE"
+          echo
+
+          # 每个探测点对应 deploy-pages.yml 中一个独立的产物拷贝步骤，
+          # 任一步骤失败时其余步骤仍会成功，所以必须逐个覆盖。
+          probe "/"                                 200 "首页 / Pages 服务本身"
+          probe "/assets/site.js"                   200 "cp -r assets/."
+          probe "/data/resources.json"              200 "cp data/resources.json（首页筛选数据源）"
+          probe "/research/"                        200 "ai-research-ebook 构建与拷贝"
+          probe "/research/docs/intro/01-overview/" 200 "research 的 BASE_PATH 与深层路由"
+          probe "/interview/"                       200 "InterviewGuide 构建与拷贝"
+          probe "/interview/questions/q-1/"         200 "interview 的 BASE_PATH 与深层路由"
+
+          # 反向断言：确认不存在的路径确实返回 404。
+          # 若某天引入了 catch-all 兜底规则导致所有路径都返回 200，
+          # 上面全部探测会集体失去意义，这一条用于兜底自检。
+          probe "/__nonexistent-health-probe__/"    404 "404 仍能正确返回（探测器自检）"
+
+          echo
+          if [ "$failed" -ne 0 ]; then
+            echo "站点探测失败：上面标记 FAIL 的 URL 未返回期望状态码。"
+            exit 1
+          fi
+          echo "全部探测点正常。"
