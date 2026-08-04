@@ -1941,7 +1941,7 @@ AgentGuide 提供 **n 个简历级实战项目**，每个项目都提供：
 
 **🛠️ 通用工具**：
 - [x] [开发者工具箱](./resources/tools.md) - Cursor、元宝、Excalidraw
-- [x] [开发框架总览](./resources/frameworks.md) - 快速框架对比
+- [x] [开发框架总览](./resources/agent/frameworks.md) - 快速框架对比
 
 **🎨 推荐可视化学习资源**：
 - 📊 **[100+ LLM/RL 算法原理图](https://github.com/changyeyu/LLM-RL-Visualized)** - 《大模型算法：强化学习、微调与对齐》作者巨献

@@ -212,7 +212,7 @@ results = collection.query(query_texts=["query"], n_results=5)
 
 ## 📝 相关文档
 
-- [RAG 框架对比](./frameworks.md)
+- [RAG 框架对比](../agent/frameworks.md)
 - [Embedding 模型选择](./embedding.md)
 - [返回 RAG 资源总览](./README.md)
 
