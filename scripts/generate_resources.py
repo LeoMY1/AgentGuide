@@ -20,7 +20,7 @@ FEATURED_PATHS = {
     "docs/00-getting-started/02-first-7-days.md",
     "docs/02-tech-stack/27-agent-harness-engineering.md",
     "docs/03-practice/05-ship-agent-project.md",
-    "docs/04-interview/18-algorithm-ai-coding-question-bank.md",
+    "docs/04-interview/22-algorithm-ai-coding-question-bank.md",
     "docs/04-interview/19-xiaohongshu-ai-algorithm-interview-bank.md",
     "docs/05-roadmaps/agent-job-ready-roadmap-2026.md",
     "docs/05-roadmaps/algorithm-complete-learning-guide.md",
