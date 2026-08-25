@@ -27,6 +27,20 @@
 
 ---
 
+## 🔥 2026 AI 研究方向专题（新）
+
+> **从前沿 Lab JD 与公开战略信号出发，判断 2026 年真正值得重投入的 AI 研究方向。**
+>
+> 主线聚焦 **长程任务 + Harness 工程、自进化 / Fully Self-Training、Agentic RL + 可扩展奖励与验证器**，并继续展开任务状态外置、Context Compaction、Skills、记忆、环境合成、Reward Hacking、Agent 安全等可落地子方向。
+
+| 入口 | 内容 | 链接 |
+|:---|:---|:---|
+| **专题总览** | Lab 战略与岗位信号、Qwen 25 类岗位、高 ROI 方向判断、12 周投入路径 | [立即阅读](./docs/06-research-frontiers/README.md) |
+| **子方向全展开** | 30+ 研究切口、代表论文与基准、RL 框架选型、实验与投稿建议 | [查看深度版](./docs/06-research-frontiers/01-ai-research-directions-expanded.md) |
+| **飞书原文** | 保留知识库原始页面，便于持续追踪更新 | [打开飞书](https://ccn7vpu5l5y8.feishu.cn/wiki/Axqmwt9Otiy7HFkqzCccT3e2nCh) |
+
+---
+
 ## 💡 核心理念
 
 > **📌 本项目定位：资源整合 + 系统化路径 + 实战导向**
@@ -42,6 +56,7 @@
 ## 📑 目录
 
 **🎯 核心内容**：
+- [🔥 2026 AI 研究方向专题](./docs/06-research-frontiers/README.md) - 长程 Harness、自进化、Agentic RL 与 Verifier 的高 ROI 研究地图
 - [💡 关于本项目](#-关于本项目) - Agent开发指南、转行大模型、高级RAG、大模型面试
 - [🆕 求职新范式](#-求职新范式做出什么--学过什么) - 1-2-5框架、个人品牌、投递策略
 - [🧭 Agent 求职通关 Todo List](#-agent-求职通关-todo-list新增) - 当前优先级、8阶段学习产出、项目落地5步法
@@ -53,6 +68,7 @@
 - [🎯 面试题库](#-第六步面试准备与-offer-冲刺) - 1500+题/面经、系统设计、编程题
 
 **🛠️ 快速导航**：
+- 🔥 前沿专题：[**2026 值得重投入的 AI 研究方向**](./docs/06-research-frontiers/README.md) | [**子方向全展开**](./docs/06-research-frontiers/01-ai-research-directions-expanded.md)
 - ⭐ 阿东作品推荐：[**learn-workbuddy**](https://github.com/adongwanai/learn-workbuddy) - 从 0 搭建 WorkBuddy-style Desktop Agent Harness，clean-room 教学复现 Agent Loop、工具调用、上下文工程、长期记忆、Sidecar、权限审计和真实模型评测
 - [🚀 10分钟快速开始](#-快速开始) | [💬 加入学习社群](#-联系作者--加入社群) | [❓ 常见问题](./FAQ.md)
 - [🧭 新手快速开始](./docs/00-getting-started/README.md) | [🧭 2026 Agent 求职路线](./docs/05-roadmaps/agent-job-ready-roadmap-2026.md) | [🛠️ Agent 项目落地方法](./docs/03-practice/05-ship-agent-project.md) | [🧩 Agent Harness Engineering](./docs/02-tech-stack/27-agent-harness-engineering.md)

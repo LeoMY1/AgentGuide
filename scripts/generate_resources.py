@@ -25,6 +25,8 @@ FEATURED_PATHS = {
     "docs/05-roadmaps/agent-job-ready-roadmap-2026.md",
     "docs/05-roadmaps/algorithm-complete-learning-guide.md",
     "docs/05-roadmaps/embodied-ai-vla-learning-guide.md",
+    "docs/06-research-frontiers/README.md",
+    "docs/06-research-frontiers/01-ai-research-directions-expanded.md",
 }
 
 TAG_RULES = [
@@ -186,6 +188,8 @@ def category_for_path(rel):
             return "面试求职"
         if section.startswith("05-roadmaps"):
             return "学习路线"
+        if section.startswith("06-research-frontiers"):
+            return "研究前沿"
         return "技术栈"
     if parts[0] == "resources":
         return "资源合集"
@@ -204,6 +208,8 @@ def type_for_path(rel, title):
         return "题库" if re.search(r"题|question|coding|interview-bank", lowered) else "求职指南"
     if "/05-roadmaps/" in f"/{rel}":
         return "路线图"
+    if "/06-research-frontiers/" in f"/{rel}":
+        return "研究专题"
     if "/03-practice/" in f"/{rel}":
         return "实战指南"
     if "/00-getting-started/" in f"/{rel}":
