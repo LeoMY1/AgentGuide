@@ -66,25 +66,29 @@
 
 > **3 分钟了解为什么你需要 AgentGuide**
 
-### 😰 你是否正在经历这些痛点？
+### 🧭 你可能正卡在这些地方
 
-- ❌ **学了一堆 LLM API 调用，但不知道 Agent 和普通对话有什么区别**
-- ❌ **看了无数篇 LangChain 文档，却依然不知道从哪里开始**
-- ❌ **做了一些 Demo 项目，但简历上写不出亮点，面试讲不清楚**
-- ❌ **想转 AI Agent 方向，但不知道算法岗和开发岗应该准备什么**
-- ❌ **网上资料又多又杂，缺少一条清晰的学习路线**
+- **会调用模型、也接过工具，但 Agent 一跑长任务就早停、循环、丢状态，出了问题不知道怎么定位**
+- **LangGraph、OpenAI Agents SDK、MCP、Skills、Multi-Agent 概念很多，却缺少一张完整的系统架构图**
+- **Context、Memory、Tools、权限、Sandbox、Trace 混在一起，Demo 能跑，离可靠系统还很远**
+- **RAG 做过基础问答，但复杂文档、多模态、引用溯源、评测集与线上观测没有形成闭环**
+- **项目只有功能截图，没有基线、指标、失败分析和工程取舍，简历写不实，面试经不起追问**
+- **想进入 Agent 方向，却不清楚开发岗、算法岗、Agentic RL 和前沿研究分别需要什么能力与作品**
+- **论文、框架和开源项目更新太快，不知道哪些值得学、先做什么、如何沉淀成可验证成果**
 
 **`AgentGuide` 是什么？**
 
-> **AI Agent 开发学习指南 | 转行大模型 | LangGraph 实战 | 高级RAG  | 大模型面试**
+> **AI Agent 工程、研究与求职的开源知识库**
 
-一份系统化、求职导向的 AI Agent 学习与面试指南，涵盖：
-- **Agent 工程**：Agent Loop、LangGraph / OpenAI Agents SDK、MCP、Skills、权限与状态管理
-- **Context Engineering**：上下文分层、Memory、Tool Loadout、长任务压缩、成本与缓存优化
-- **RAG / Multimodal RAG**：文档解析、Embedding、Rerank、GraphRAG、Agentic RAG、视觉文档检索
-- **Eval / Observability / Safety**：Agent 评测集、trace、LLM-as-judge、红队、安全边界与 human-in-the-loop
-- **Post-training / Agent RL**：SFT、偏好优化、GRPO/DPO、工具调用数据合成、轨迹数据训练
-- **实战与求职**：Paper Agent、Travel Agent、Web Agent、项目复盘、简历表达与面试题库
+AgentGuide 围绕 **“做得出、跑得稳、测得准、讲得清”** 组织内容，不绑定单一框架，也不止于资源收藏：
+
+- **Agent 系统与 Harness**：Agent Loop、Workflow / Agent / Multi-Agent 边界、状态、调度、权限与运行时
+- **Context Engineering 与 Memory**：上下文分层、检索、压缩、长期记忆、Prompt Cache 与成本优化
+- **Tools 与协议生态**：Tool Schema、MCP、Skills、A2A / ACP、Browser / Computer Use 与 Sandbox
+- **RAG 与知识系统**：文档解析、Hybrid Retrieval、Rerank、GraphRAG、Agentic RAG、Multimodal RAG 与引用溯源
+- **Eval、Observability 与 Safety**：评测集、Trace / Replay、LLM-as-a-Judge、红队、HITL 与生产可靠性
+- **Post-training 与 Agentic RL**：SFT、DPO / GRPO、轨迹数据、Reward / Verifier、长程信用分配与环境构建
+- **项目、研究与求职**：可复现实战、开源项目、前沿论文、实验设计、简历表达、系统设计与面试题库
 
 ### 🗺️ AgentGuide 在 LLM 生态中的定位
 
