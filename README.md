@@ -231,15 +231,16 @@
 
 ### 🎁 学完 AgentGuide，你能获得什么？
 
-> **从迷茫到清晰，从理论到Offer，一站式成长路径**
+> **从“会调用模型”到“能设计、实现、评测并讲清一个可靠的 Agent 系统”**
 ```
-✅ 【概念清晰】深刻理解：Agent 和普通 LLM 调用的本质区别
-✅ 【技能掌握】熟练使用：CamelAI、LangGraph、向量数据库等核心工具  
-✅ 【动手能力】独立开发：RAG Agent、Multi-Agent、Web Agent 系统
-✅ 【简历亮点】2-3 个可以写进简历、面试能讲清楚的项目
-✅ 【面试自信】掌握 Agent 方向的高频面试题和标准答案
-✅ 【职业规划】明确算法岗和开发岗的差异，找到适合自己的方向
-✅ 【人脉资源】加入 AI Agent 学习社群，结识同行，互相成长
+✅ 【架构认知】分清 Chatbot、Workflow、Agent 与 Multi-Agent，理解 Agent Loop 和 Harness
+✅ 【工程能力】掌握 LangGraph / OpenAI Agents SDK、Context Engineering、Memory、Tools、MCP 与 Skills
+✅ 【RAG 能力】能设计 Hybrid Retrieval、Rerank、引用溯源、GraphRAG、Agentic RAG 与 Multimodal RAG
+✅ 【可靠性】会构建 Eval Set、Trace / Replay、LLM-as-a-Judge、Sandbox、HITL、权限和成本控制
+✅ 【训练认知】理解 SFT、DPO / GRPO、工具调用与轨迹数据合成、Reward / Verifier 的基本方法
+✅ 【项目交付】完成 2-3 个可运行、可评测、可复现的项目，并写清架构、指标、取舍与失败分析
+✅ 【面试表达】能围绕原理、系统设计、实验结果和工程权衡回答追问，而不是背“标准答案”
+✅ 【求职路径】明确算法岗与开发岗能力差异，用项目、开源贡献和技术内容构建作品集
 ```
 
 ---
