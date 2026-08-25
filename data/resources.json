@@ -2,7 +2,7 @@
   {
     "id": "doc-docs-06-research-frontiers-01-ai-research-directions-expanded-md",
     "title": "2026 值得重投入的 AI 研究方向：子方向全展开",
-    "description": "[!NOTE] 本页是专题的子页面，于 2026-08-25 从飞书知识库同步。文中包含研究判断与论文线索，引用前请通过论文主页、arXiv 或机构官方渠道复核版本与结论",
+    "description": "[!NOTE] 本页是专题的子页面，于 2026-08-25 从作者知识库同步。文中包含研究判断与论文线索，引用前请通过论文主页、arXiv 或机构官方渠道复核版本与结论",
     "category": "研究前沿",
     "tags": [
       "Agent",
@@ -17,7 +17,7 @@
     "sourcePath": "docs/06-research-frontiers/01-ai-research-directions-expanded.md",
     "date": "2026-08-25",
     "readingMinutes": 29,
-    "wordCount": 11342,
+    "wordCount": 11321,
     "status": "已完善",
     "featured": true,
     "external": false
@@ -25,7 +25,7 @@
   {
     "id": "doc-docs-06-research-frontiers-readme-md",
     "title": "从前沿 Lab JD 与战略看 2026 年值得重投入的 AI 研究方向",
-    "description": "[!IMPORTANT] 本专题于 2026-08-25 从飞书知识库同步，聚焦前沿 Lab 招聘与公开战略信号下的 2026 AI 研究方向判断。趋势判断具有时效性，涉及论文、基准和机构动态时，请继续沿文中线索核对原始来源",
+    "description": "[!IMPORTANT] 本专题于 2026-08-25 从作者知识库同步，聚焦前沿 Lab 招聘与公开战略信号下的 2026 AI 研究方向判断。趋势判断具有时效性，涉及论文、基准和机构动态时，请继续沿文中线索核对原始来源",
     "category": "研究前沿",
     "tags": [
       "Agent",
@@ -40,7 +40,7 @@
     "sourcePath": "docs/06-research-frontiers/README.md",
     "date": "2026-08-25",
     "readingMinutes": 11,
-    "wordCount": 4285,
+    "wordCount": 4260,
     "status": "已完善",
     "featured": true,
     "external": false
