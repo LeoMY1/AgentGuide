@@ -17,7 +17,7 @@
    - RAG（Retrieval-Augmented Generation，检索增强生成）把语言模型的参数化知识与外部非参数化知识库结合起来。原始论文的 RAG-Sequence 在 Top-K 截断下可抽象为：
 
      $$
-     p(y \mid q) \approx \sum_{z \in \operatorname{TopK}(q)} p(z \mid q)\,p(y \mid q,z)
+     p(y \mid q) \approx \sum_{z \in \mathrm{TopK}(q)} p(z \mid q) \cdot p(y \mid q,z)
      $$
 
      RAG-Token 则逐 token 对文档边缘化。工程中更常见的是一次拼接 Top-K 证据后建模：
@@ -140,22 +140,22 @@
    - 相似度常用余弦：
 
      $$
-     \cos(q,d) = \frac{q \cdot d}{\lVert q \rVert\,\lVert d \rVert}
+     \cos(q,d) = \frac{q \cdot d}{\lVert q \rVert \cdot \lVert d \rVert}
      $$
 
      若向量已做 L2 归一化，点积排序与余弦排序等价。
    - `Recall@K` 关注是否召回完整证据，`Precision@K` 关注前 K 个结果的纯度：
 
      $$
-     \operatorname{Recall@K} = \frac{\lvert R_q^K \cap G_q \rvert}{\lvert G_q \rvert},
+     \mathrm{Recall@K} = \frac{\lvert R_q^K \cap G_q \rvert}{\lvert G_q \rvert},
      \qquad
-     \operatorname{Precision@K} = \frac{\lvert R_q^K \cap G_q \rvert}{K}
+     \mathrm{Precision@K} = \frac{\lvert R_q^K \cap G_q \rvert}{K}
      $$
 
    - MRR 只看首个相关结果出现得有多早；`nDCG@K` 考虑多级相关性和位置折损，适合一个问题有多个不同价值证据；还可按任务使用 MAP：
 
      $$
-     \operatorname{MRR} = \frac{1}{\lvert Q \rvert}\sum_{q \in Q}\frac{1}{\operatorname{rank}_q}
+     \mathrm{MRR} = \frac{1}{\lvert Q \rvert}\sum_{q \in Q}\frac{1}{\mathrm{rank}_q}
      $$
    - 除模型级检索指标，还要看端到端答案正确性、忠实度和引用覆盖率，因为向量相似不等于答案可支持性。
 
@@ -188,7 +188,7 @@
    - BM25 擅长产品编号、人名、缩写和精确关键词，稠密向量擅长同义表达和语义匹配。两路并行后可线性融合归一化分数，或用 RRF 按名次融合，避免直接比较不同检索器的原始分数：
 
      $$
-     \operatorname{RRF}(d) = \sum_r \frac{1}{k + \operatorname{rank}_r(d)}
+     \mathrm{RRF}(d) = \sum_r \frac{1}{k + \mathrm{rank}_r(d)}
      $$
    - 对跨语言、代码、表格等特殊数据可增加专用索引，但召回通道越多，去重、延迟和调参成本越高。
 
@@ -293,18 +293,18 @@
      $$
      \lvert G_q \rvert > 0,
      \qquad
-     \operatorname{Recall@K} = \frac{\lvert R_q^K \cap G_q \rvert}{\lvert G_q \rvert},
+     \mathrm{Recall@K} = \frac{\lvert R_q^K \cap G_q \rvert}{\lvert G_q \rvert},
      \qquad
-     \operatorname{Precision@K} = \frac{\lvert R_q^K \cap G_q \rvert}{K}
+     \mathrm{Precision@K} = \frac{\lvert R_q^K \cap G_q \rvert}{K}
      $$
 
      `Recall@K` 衡量证据是否被找全，`Precision@K` 衡量送入后续阶段的噪声比例；`Hit@K` 只判断 Top-K 中是否至少命中一条证据。无答案问题不计算该 Recall，而应观察误召率和正确拒答率。
    - MRR 强调第一条相关结果的位置；相关性有等级时使用 `nDCG@K`，同时奖励高相关证据排在前面：
 
      $$
-     \operatorname{MRR} = \frac{1}{\lvert Q \rvert}\sum_{q \in Q}\frac{1}{\operatorname{rank}_q},
+     \mathrm{MRR} = \frac{1}{\lvert Q \rvert}\sum_{q \in Q}\frac{1}{\mathrm{rank}_q},
      \qquad
-     \operatorname{nDCG@K} = \frac{\operatorname{DCG@K}}{\operatorname{IDCG@K}}
+     \mathrm{nDCG@K} = \frac{\mathrm{DCG@K}}{\mathrm{IDCG@K}}
      $$
    - 工程上还要观察去重率、来源覆盖率、过期文档命中率、权限过滤正确率、检索 P50/P95/P99 延迟和单次检索成本。若相关证据标注不完整，Precision 与 Recall 也会失真。
 
@@ -354,7 +354,7 @@
    - 必须设置最大轮数、重复查询检测、总 Token/时间预算和停止条件。可以把目标写成：
 
      $$
-     \operatorname{Utility} = \operatorname{Quality} - \lambda \cdot \operatorname{Cost} - \mu \cdot \operatorname{Latency}
+     \mathrm{Utility} = \mathrm{Quality} - \lambda \cdot \mathrm{Cost} - \mu \cdot \mathrm{Latency}
      $$
 
      再通过离线数据或在线反馈调节路由阈值。
@@ -419,7 +419,7 @@
    - 两者是组合与复用关系，而不是严格的包含或替代关系。典型 RAG 链路可近似写成：
 
      $$
-     \mathrm{RAG} \approx \mathrm{Retrieval} + \mathrm{Context\ Construction} + \mathrm{Generation}
+     \mathrm{RAG} \approx \mathrm{Retrieval} + \text{Context Construction} + \mathrm{Generation}
      $$
 
      如果召回阶段漏掉证据，生成模型通常无法可靠补救。
@@ -456,7 +456,7 @@
    - 可以建立加权决策：
 
      $$
-     \operatorname{Score} = \sum_i w_i \cdot \operatorname{normalize}(m_i)
+     \mathrm{Score} = \sum_i w_i \cdot \mathrm{normalize}(m_i)
      $$
 
      但安全、许可证、数据驻留或权限能力属于硬门槛，不应被其他高分抵消。
@@ -603,11 +603,11 @@
 2. **核心公式**
 
    $$
-   \operatorname{score}(D,Q) =
+   \mathrm{score}(D,Q) =
    \sum_{q_i \in Q}
-   \operatorname{IDF}(q_i)
+   \mathrm{IDF}(q_i)
    \frac{f(q_i,D)(k_1+1)}
-   {f(q_i,D)+k_1\left(1-b+b\frac{\lvert D \rvert}{\operatorname{avgdl}}\right)}
+   {f(q_i,D)+k_1\left(1-b+b\frac{\lvert D \rvert}{\mathrm{avgdl}}\right)}
    $$
 
    - 函数 f 表示第 i 个查询词在文档 D 中的词频。
@@ -617,7 +617,7 @@
    - 常见的平滑 IDF 实现为：
 
      $$
-     \operatorname{IDF}(q_i) =
+     \mathrm{IDF}(q_i) =
      \log\left(1+\frac{N-n(q_i)+0.5}{n(q_i)+0.5}\right)
      $$
 
@@ -654,7 +654,7 @@
    - **监督分类模型**：用 BERT 类 Encoder 的 `[CLS]` 表示接线性层：
 
      $$
-     p(y \mid x) = \operatorname{softmax}(Wh+b)
+     p(y \mid x) = \mathrm{softmax}(Wh+b)
      $$
 
      多标签任务改用 sigmoid。数据充足时，延迟、成本和一致性通常优于大模型分类。
@@ -696,7 +696,7 @@
    - **多路召回**：BM25 覆盖精确词项，Dense Retrieval 覆盖语义改写，特定场景再增加图、SQL 或搜索引擎通路。不同通路的原始分数不可直接相加，可用 RRF 按名次融合：
 
      $$
-     \operatorname{score}(d) = \sum_r \frac{1}{k + \operatorname{rank}_r(d)}
+     \mathrm{score}(d) = \sum_r \frac{1}{k + \mathrm{rank}_r(d)}
      $$
    - **过滤与排序**：先做租户、权限、时间等硬过滤，再去重；对较小候选集用 Cross-Encoder/重排模型精排，最后按相关性、来源多样性和上下文预算选证据。
 
@@ -793,7 +793,7 @@
      $$
      \begin{aligned}
      T_{\mathrm{total}} \approx {}& T_{\mathrm{route}} + T_{\mathrm{app\text{-}queue}} \\
-     &+ \max\!\left(T_{\mathrm{BM25}},\;T_{\mathrm{embed}}+T_{\mathrm{vector}},\;T_{\mathrm{search}},\ldots\right) \\
+     &+ \max\left(T_{\mathrm{BM25}}, T_{\mathrm{embed}}+T_{\mathrm{vector}}, T_{\mathrm{search}},\ldots\right) \\
      &+ T_{\mathrm{rerank}} + \mathrm{TTFT}_{\mathrm{model}} \\
      &+ \left(N_{\mathrm{output}}-1\right)\mathrm{ITL}
      \end{aligned}
