@@ -16,15 +16,15 @@
 1. **定义与目标**
    - RAG（Retrieval-Augmented Generation，检索增强生成）把语言模型的参数化知识与外部非参数化知识库结合起来。原始论文的 RAG-Sequence 在 Top-K 截断下可抽象为：
 
-     $$
+     ```math
      p(y \mid q) \approx \sum_{z \in \mathrm{TopK}(q)} p(z \mid q) \cdot p(y \mid q,z)
-     $$
+     ```
 
      RAG-Token 则逐 token 对文档边缘化。工程中更常见的是一次拼接 Top-K 证据后建模：
 
-     $$
+     ```math
      p(y \mid q,Z_K)
-     $$
+     ```
 
      这些公式描述的是不同实现，不能混为一个通用定义。
    - 它主要解决纯参数模型的三类问题：训练知识有截止时间、私有或长尾知识难以写入参数、答案出处难追溯。RAG 让知识可以在模型权重之外独立更新。
@@ -98,9 +98,9 @@
 1. **先明确优化目标**
    - 切块单位优先使用与 Embedding 模型一致的 token，而不是字符数。块长度必须不超过 Embedding 模型的有效输入上限；最终送入生成模型的总长度还要满足：
 
-     $$
+     ```math
      L_{\text{instruction}} + L_{\text{question}} + \sum_i L_{\text{chunk}_i} + L_{\text{output}} \leq L_{\text{context}}
-     $$
+     ```
    - 没有跨场景通用的“最佳 512 tokens、重叠 20%”。应根据文档结构、问题粒度、答案跨度、模型上限和延迟预算，在真实查询集上实验选择。
 
 2. **块大小的权衡**
@@ -139,24 +139,24 @@
 2. **检索效果指标**
    - 相似度常用余弦：
 
-     $$
+     ```math
      \cos(q,d) = \frac{q \cdot d}{\lVert q \rVert \cdot \lVert d \rVert}
-     $$
+     ```
 
      若向量已做 L2 归一化，点积排序与余弦排序等价。
    - `Recall@K` 关注是否召回完整证据，`Precision@K` 关注前 K 个结果的纯度：
 
-     $$
+     ```math
      \mathrm{Recall@K} = \frac{\lvert R_q^K \cap G_q \rvert}{\lvert G_q \rvert},
      \qquad
      \mathrm{Precision@K} = \frac{\lvert R_q^K \cap G_q \rvert}{K}
-     $$
+     ```
 
    - MRR 只看首个相关结果出现得有多早；`nDCG@K` 考虑多级相关性和位置折损，适合一个问题有多个不同价值证据；还可按任务使用 MAP：
 
-     $$
+     ```math
      \mathrm{MRR} = \frac{1}{\lvert Q \rvert}\sum_{q \in Q}\frac{1}{\mathrm{rank}_q}
-     $$
+     ```
    - 除模型级检索指标，还要看端到端答案正确性、忠实度和引用覆盖率，因为向量相似不等于答案可支持性。
 
 3. **工程指标**
@@ -187,9 +187,9 @@
 1. **混合检索与多路召回**
    - BM25 擅长产品编号、人名、缩写和精确关键词，稠密向量擅长同义表达和语义匹配。两路并行后可线性融合归一化分数，或用 RRF 按名次融合，避免直接比较不同检索器的原始分数：
 
-     $$
+     ```math
      \mathrm{RRF}(d) = \sum_r \frac{1}{k + \mathrm{rank}_r(d)}
-     $$
+     ```
    - 对跨语言、代码、表格等特殊数据可增加专用索引，但召回通道越多，去重、延迟和调参成本越高。
 
 2. **查询侧优化**
@@ -290,22 +290,22 @@
 2. **检索阶段指标**
    - 对于存在相关证据的可回答问题，定义相关证据集合和 Top-K 结果后，可计算：
 
-     $$
+     ```math
      \lvert G_q \rvert > 0,
      \qquad
      \mathrm{Recall@K} = \frac{\lvert R_q^K \cap G_q \rvert}{\lvert G_q \rvert},
      \qquad
      \mathrm{Precision@K} = \frac{\lvert R_q^K \cap G_q \rvert}{K}
-     $$
+     ```
 
      `Recall@K` 衡量证据是否被找全，`Precision@K` 衡量送入后续阶段的噪声比例；`Hit@K` 只判断 Top-K 中是否至少命中一条证据。无答案问题不计算该 Recall，而应观察误召率和正确拒答率。
    - MRR 强调第一条相关结果的位置；相关性有等级时使用 `nDCG@K`，同时奖励高相关证据排在前面：
 
-     $$
+     ```math
      \mathrm{MRR} = \frac{1}{\lvert Q \rvert}\sum_{q \in Q}\frac{1}{\mathrm{rank}_q},
      \qquad
      \mathrm{nDCG@K} = \frac{\mathrm{DCG@K}}{\mathrm{IDCG@K}}
-     $$
+     ```
    - 工程上还要观察去重率、来源覆盖率、过期文档命中率、权限过滤正确率、检索 P50/P95/P99 延迟和单次检索成本。若相关证据标注不完整，Precision 与 Recall 也会失真。
 
 3. **生成阶段指标**
@@ -335,13 +335,13 @@
    - 固定式 RAG 对所有查询都检索一次、取固定 Top-K。简单闲聊可能根本不需要检索，多跳问题却可能要先获得中间事实再发起下一轮查询；第一次召回失败时，固定流程也没有纠错机会。
    - 高级 RAG 的本质是把检索变成一个可决策、可反馈的过程。状态和动作可以表示为：
 
-     $$
+     ```math
      s_t = \{\text{原问题},\text{已有证据},\text{中间结论}\}
-     $$
+     ```
 
-     $$
+     ```math
      a_t \in \{\text{不检索},\text{检索},\text{改写},\text{分解},\text{继续检索},\text{回答},\text{拒答}\}
-     $$
+     ```
 
 2. **典型范式**
    - **迭代/多跳检索**：先将复杂问题分成子问题，检索第一跳证据，根据中间结果生成下一跳查询，直到证据链闭合。适合跨文档比较、因果链和实体关系问题，但早期推理错误会造成查询漂移。
@@ -353,9 +353,9 @@
    - 先做意图、时效性和复杂度路由，再检索与重排；用独立 grader 判断证据的相关性、充分性和冲突情况。若证据不足，则改写查询、扩展数据源或分解子问题；满足证据阈值后生成，否则明确拒答。
    - 必须设置最大轮数、重复查询检测、总 Token/时间预算和停止条件。可以把目标写成：
 
-     $$
+     ```math
      \mathrm{Utility} = \mathrm{Quality} - \lambda \cdot \mathrm{Cost} - \mu \cdot \mathrm{Latency}
-     $$
+     ```
 
      再通过离线数据或在线反馈调节路由阈值。
 
@@ -418,9 +418,9 @@
    - RAG 流程在检索后增加上下文压缩与生成。除检索指标外，还要优化答案正确性、忠实度、引用精确率/召回率、正确拒答率和端到端 Token 成本。
    - 两者是组合与复用关系，而不是严格的包含或替代关系。典型 RAG 链路可近似写成：
 
-     $$
+     ```math
      \mathrm{RAG} \approx \mathrm{Retrieval} + \text{Context Construction} + \mathrm{Generation}
-     $$
+     ```
 
      如果召回阶段漏掉证据，生成模型通常无法可靠补救。
 
@@ -455,9 +455,9 @@
    - 再做最小 PoC，用同一批真实文档和黄金问题比较解析正确率、Recall@K、忠实度、引用质量、P95 延迟、资源占用、故障恢复、升级兼容性和二次开发成本。
    - 可以建立加权决策：
 
-     $$
+     ```math
      \mathrm{Score} = \sum_i w_i \cdot \mathrm{normalize}(m_i)
-     $$
+     ```
 
      但安全、许可证、数据驻留或权限能力属于硬门槛，不应被其他高分抵消。
 
@@ -487,24 +487,24 @@
    - 第一阶段用向量/关键词召回较大的候选集，再在重排阶段融合语义相关性、来源质量和新鲜度，避免时间权重过早挤掉真正相关的旧证据。
    - 常用指数衰减如下，其中时间差表示文档年龄，半衰期为 h：
 
-     $$
+     ```math
      f_{\mathrm{time}}(\Delta t) = e^{-\lambda \Delta t},
      \qquad
      \lambda = \frac{\ln 2}{h}
-     $$
+     ```
 
      各项分数归一化后，可用加权方式融合相关性、来源质量和时间新鲜度：
 
-     $$
+     ```math
      s = \alpha s_{\mathrm{rel}} + \beta s_{\mathrm{source}} + \gamma f_{\mathrm{time}}(\Delta t)
-     $$
+     ```
 
      也可以乘法融合，但会更强地惩罚旧内容。
    - 对“最新、当前、截至今天”等强时效查询，提高时间项权重或使用专门路由；对法规版本使用生效区间做硬过滤：
 
-     $$
+     ```math
      t_{\text{valid from}} \leq t_{\text{query}} < t_{\text{valid to}}
-     $$
+     ```
 
      相互矛盾的版本要按实体与版本聚合，保留来源和生效区间供生成器解释。
 
@@ -602,13 +602,13 @@
 
 2. **核心公式**
 
-   $$
+   ```math
    \mathrm{score}(D,Q) =
    \sum_{q_i \in Q}
    \mathrm{IDF}(q_i)
    \frac{f(q_i,D)(k_1+1)}
    {f(q_i,D)+k_1\left(1-b+b\frac{\lvert D \rvert}{\mathrm{avgdl}}\right)}
-   $$
+   ```
 
    - 函数 f 表示第 i 个查询词在文档 D 中的词频。
    - 文档长度项与平均文档长度项共同完成长度校正。
@@ -616,10 +616,10 @@
    - 参数 b 的范围是 0 到 1，用于控制长度归一化强度；取 0 时不做长度归一化，取 1 时做完整归一化。
    - 常见的平滑 IDF 实现为：
 
-     $$
+     ```math
      \mathrm{IDF}(q_i) =
      \log\left(1+\frac{N-n(q_i)+0.5}{n(q_i)+0.5}\right)
-     $$
+     ```
 
      其中 N 是文档总数，函数 n 表示包含第 i 个查询词的文档数。原始 Robertson/Sparck Jones 权重与 Lucene 等工程实现的平滑、截断方式并不完全相同，面试时不应把某一种 IDF 变体说成唯一标准。简化版 BM25 通常也省略了查询词频项。
 
@@ -653,9 +653,9 @@
    - **Embedding 原型匹配**：为每个意图维护示例或中心向量，以余弦相似度路由，新增意图快，适合冷启动；但相近意图的边界通常不如监督分类器稳定。
    - **监督分类模型**：用 BERT 类 Encoder 的 `[CLS]` 表示接线性层：
 
-     $$
+     ```math
      p(y \mid x) = \mathrm{softmax}(Wh+b)
-     $$
+     ```
 
      多标签任务改用 sigmoid。数据充足时，延迟、成本和一致性通常优于大模型分类。
    - **LLM 结构化分类**：适合标签经常变化、需要结合对话上下文或要同时抽取槽位的场景；必须限制输出 schema，并对结果做枚举、类型和权限校验。
@@ -664,9 +664,9 @@
 3. **置信度、未知意图与数据闭环**
    - 若最高类别置信度低于阈值，或 Top-1 与 Top-2 的置信差小于阈值，应进入澄清、通用检索或人工兜底，而不是强制路由：
 
-     $$
+     ```math
      \max_y p(y \mid x) < \tau
-     $$
+     ```
 
      分类概率往往未校准，阈值应基于验证集和不同错误成本确定。
    - 数据集需要覆盖同义表达、短句、错别字、上下文依赖、类别不均衡和难负例；线上收集误路由、低置信与用户纠正样本，定期回流训练。
@@ -695,9 +695,9 @@
    - **查询理解**：拼写和实体标准化、指代消解、意图识别、时间与权限等元数据抽取；仅在必要时做查询改写或扩展，防止语义漂移。
    - **多路召回**：BM25 覆盖精确词项，Dense Retrieval 覆盖语义改写，特定场景再增加图、SQL 或搜索引擎通路。不同通路的原始分数不可直接相加，可用 RRF 按名次融合：
 
-     $$
+     ```math
      \mathrm{score}(d) = \sum_r \frac{1}{k + \mathrm{rank}_r(d)}
-     $$
+     ```
    - **过滤与排序**：先做租户、权限、时间等硬过滤，再去重；对较小候选集用 Cross-Encoder/重排模型精排，最后按相关性、来源多样性和上下文预算选证据。
 
 3. **子问题分解怎么做**
@@ -790,14 +790,14 @@
 1. **先拆解延迟，而不是只看平均响应时间**
    - 将链路拆成路由、应用队列、多路召回、重排、模型首 token 和逐 token 生成。并行召回时应按关键路径计算，而不是把所有通路简单串联：
 
-     $$
+     ```math
      \begin{aligned}
      T_{\mathrm{total}} \approx {}& T_{\mathrm{route}} + T_{\mathrm{app\text{-}queue}} \\
      &+ \max\left(T_{\mathrm{BM25}}, T_{\mathrm{embed}}+T_{\mathrm{vector}}, T_{\mathrm{search}},\ldots\right) \\
      &+ T_{\mathrm{rerank}} + \mathrm{TTFT}_{\mathrm{model}} \\
      &+ \left(N_{\mathrm{output}}-1\right)\mathrm{ITL}
      \end{aligned}
-     $$
+     ```
 
    - 这里应用队列时间指模型调用前的应用侧排队；TTFT 从模型请求提交到首 token，已包含模型服务端排队和 prefill；ITL 是相邻输出 token 的平均间隔。重点观测各阶段 P50/P95/P99、吞吐量、缓存命中率和超时率，同时设质量护栏，避免重复计算模型队列。
 
